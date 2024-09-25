@@ -16,7 +16,7 @@ jobs:
     - name: Setup Flutter
       uses: subosito/flutter-action@v2
       with:
-        flutter-version: '3.10.6' # 사용하는 Flutter 버전으로 변경
+        flutter-version: '3.10.6'
 
     - name: Install Dependencies
       run: flutter pub get
