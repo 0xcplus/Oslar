@@ -22,11 +22,11 @@ jobs:
     - name: Create .env with Dummy Data
       run: echo "OPEN_API_KEY=dummy_api_key" >> .env
 
-    - name: Build Web
-      run: flutter build web --release
-
     - name: Generate env.g.dart
       run: dart run build_runner build --delete-conflicting-outputs
+
+    - name: Build Web
+      run: flutter build web --release
 
     - name: Add .nojekyll
       run: echo > build/web/.nojekyll
