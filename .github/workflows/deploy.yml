@@ -1,5 +1,3 @@
-name: Deploy Flutter Web App to GitHub Pages
-
 on:
   push:
     branches:
@@ -16,10 +14,13 @@ jobs:
     - name: Setup Flutter
       uses: subosito/flutter-action@v2
       with:
-        flutter-version: '^3.5.3'
+        flutter-version: '3.24.3'
 
     - name: Install Dependencies
       run: flutter pub get
+
+    - name: Create .env with Dummy Data
+      run: echo "OPEN_API_KEY=dummy_api_key" >> .env
 
     - name: Build Web
       run: flutter build web --release
@@ -27,15 +28,12 @@ jobs:
     - name: Add .nojekyll
       run: echo > build/web/.nojekyll
 
-    - name: Create .env file
-      run: echo "OPEN_API_KEY=${{ secrets.OPEN_AI_API_KEY }}" > .env
-
-    - name: Generate env.g.dart
-      run: dart run build_runner build --delete-conflicting-outputs
+    - name: Update .env for Deployment
+      run: echo "OPEN_API_KEY=${{ secrets.OPEN_AI_API_KEY }}" >> build/web/.env
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
-        github_token: ${{ secrets.STATIC_DEPLOY_KEY }} # repository에서 사용할 시크릿 키 이름
+        github_token: ${{ secrets.STATIC_DEPLOY_KEY }} 
         publish_dir: build/web
         publish_branch: gh-pages
