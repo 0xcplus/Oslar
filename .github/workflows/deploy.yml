@@ -22,7 +22,7 @@ jobs:
       run: flutter pub get
 
     - name: Create .env file
-      run: echo "OPEN_API_KEY=${{ secrets.OPEN_AI_API_KEY }}" > .env
+      run: echo "OPEN_AI_API_KEY=${{ secrets.OPEN_AI_API_KEY }}" > .env
 
     - name: Generate env.g.dart
       run: dart run build_runner build --delete-conflicting-outputs
