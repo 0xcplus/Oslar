@@ -17,7 +17,7 @@ jobs:
       uses: subosito/flutter-action@v2
       with:
         flutter-version: '3.10.6'
-        dart-version:'3.5.3'
+        dart-version: '3.5.3'
 
     - name: Install Dependencies
       run: flutter pub get
