@@ -24,13 +24,14 @@ jobs:
     - name: Create .env file
       run: echo "OPEN_API_KEY=${{ secrets.OPEN_AI_API_KEY }}" >> .env
 
-    - name: Debug - Check for .env
+    - name: Debug! Check for .env
       run: |
         echo "Checking for .env"
         ls -l .env
 
-    #- name: Generate env.g.dart
-    #  run: dart run build_runner build --delete-conflicting-outputs
+    - name: Add mobile-web-app-capable meta tag and base href
+      run: |
+        sed -i 's|</head>|<meta name="mobile-web-app-capable" content="yes">\n<base href="/Oslar/">\n</head>|g' build/web/index.html
 
     - name: Build Web
       run: flutter build web --release
