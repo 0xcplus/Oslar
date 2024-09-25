@@ -29,8 +29,8 @@ jobs:
         echo "Checking for .env"
         ls -l .env
 
-    - name: Generate env.g.dart
-      run: dart run build_runner build --delete-conflicting-outputs
+    #- name: Generate env.g.dart
+    #  run: dart run build_runner build --delete-conflicting-outputs
 
     - name: Build Web
       run: flutter build web --release
