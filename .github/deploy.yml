@@ -1,26 +1,31 @@
+name: Deploy Flutter Web App to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+    - name: Checkout
+      uses: actions/checkout@v4
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
+    - name: Setup Flutter
+      uses: subosito/flutter-action@v2
       with:
-        node-version: '14'  # 필요한 Node.js 버전
+        flutter-version: '3.10.6' # 사용하는 Flutter 버전으로 변경
 
-    - name: Install Node.js dependencies
-      run: npm install
+    - name: Install Dependencies
+      run: flutter pub get
 
-    - name: Set up Dart
-      uses: subosito/dart-action@v2
-      with:
-        dart-version: 'stable'
+    - name: Build Web
+      run: flutter build web --release
 
-    - name: Install Dart dependencies
-      run: dart pub get
+    - name: Add .nojekyll
+      run: echo > build/web/.nojekyll
 
     - name: Create .env file
       run: echo "OPEN_API_KEY=${{ secrets.OPEN_AI_API_KEY }}" > .env
@@ -28,11 +33,9 @@ jobs:
     - name: Generate env.g.dart
       run: dart run build_runner build --delete-conflicting-outputs
 
-    - name: Build project
-      run: dart compile exe bin/main.dart -o build/my_project_executable
-
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./build
+        github_token: ${{ secrets.STATIC_DEPLOY_KEY }} # repository에서 사용할 시크릿 키 이름
+        publish_dir: build/web
+        publish_branch: gh-pages
