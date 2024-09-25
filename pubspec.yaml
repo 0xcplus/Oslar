@@ -4,7 +4,7 @@ publish_to: 'none'
 version: 0.1.0
 
 environment:
-  sdk: ^3.5.3
+  sdk: 3.0.6 #SDK 의존성 문제
 
 dependencies:
   flutter:
