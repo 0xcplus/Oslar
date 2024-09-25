@@ -19,11 +19,11 @@ jobs:
     - name: Install Dependencies
       run: flutter pub get
 
-    - name: Create .env with Dummy Data
+    - name: Create .env
       run: echo "OPEN_API_KEY=${{ secrets.OPEN_AI_API_KEY }}" >> .env
 
     - name: Generate env.g.dart
-      run: dart run build_runner build --delete-conflicting-outputs
+      run: dart run build_runner build #--delete-conflicting-outputs
 
     - name: Build Web
       run: flutter build web --release
