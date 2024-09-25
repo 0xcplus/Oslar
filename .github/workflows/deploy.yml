@@ -16,8 +16,8 @@ jobs:
     - name: Setup Flutter
       uses: subosito/flutter-action@v2
       with:
-        flutter-version: '3.10.6'
-        dart-version: '3.5.3'
+        flutter-version: '3.24.3'
+        #dart-version: '3.5.3'
 
     - name: Install Dependencies
       run: flutter pub get
@@ -37,6 +37,6 @@ jobs:
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
-        github_token: ${{ secrets.STATIC_DEPLOY_KEY }} # repository에서 사용할 시크릿 키 이름
+        github_token: ${{ secrets.STATIC_DEPLOY_KEY }}
         publish_dir: build/web
         publish_branch: gh-pages
