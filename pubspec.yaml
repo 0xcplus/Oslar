@@ -1,41 +1,29 @@
-name: Deploy Flutter Web App to GitHub Pages
+#deploy.yml가 아니니 주의 요망
 
-on:
-  push:
-    branches:
-      - main
+name: oslar
+description: "A new Flutter project."
+publish_to: 'none'
+version: 0.1.0
 
-jobs:
-  build-and-deploy:
-    runs-on: ubuntu-latest
+environment:
+  sdk: ^3.5.3
 
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v4
+dependencies:
+  flutter:
+    sdk: flutter
+  dart_openai: ^5.1.0
+  envied: ^0.5.4+1
+  intl: ^0.19.0
+  cupertino_icons: ^1.0.0
 
-    - name: Setup Flutter
-      uses: subosito/flutter-action@v2
-      with:
-        flutter-version: '3.24.3'
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+  envied_generator: ^0.5.4+1
+  build_runner: ^2.4.12
 
-    - name: Install Dependencies
-      run: flutter pub get
-
-    - name: Create .env file
-      run: echo "OPEN_API_KEY=${{ secrets.OPEN_AI_API_KEY }}" > .env
-
-    - name: Generate env.g.dart
-      run: dart run build_runner build --delete-conflicting-outputs
-
-    - name: Build Web
-      run: flutter build web --release
-
-    - name: Add .nojekyll
-      run: echo > build/web/.nojekyll
-
-    - name: Deploy to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.STATIC_DEPLOY_KEY }}
-        publish_dir: build/web
-        publish_branch: gh-pages
+flutter:
+  uses-material-design: true
+  assets:
+  - assets/images/logo.png
