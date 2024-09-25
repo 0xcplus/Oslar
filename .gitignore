@@ -1,3 +1,7 @@
+#OPENAI_API_KEY
+.env
+lib/env/env.g.dart
+
 # Miscellaneous
 *.class
 *.log
