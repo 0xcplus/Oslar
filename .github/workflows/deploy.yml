@@ -25,6 +25,9 @@ jobs:
     - name: Build Web
       run: flutter build web --release
 
+    - name: Generate env.g.dart
+      run: dart run build_runner build --delete-conflicting-outputs
+
     - name: Add .nojekyll
       run: echo > build/web/.nojekyll
 
