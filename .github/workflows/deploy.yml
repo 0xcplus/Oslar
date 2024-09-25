@@ -18,14 +18,20 @@ jobs:
       with:
         flutter-version: '3.24.3'
 
-    - name: Create .env file
-      run: echo "OPEN_API_KEY=${{ secrets.OPEN_AI_API_KEY }}" > .env
-
     - name: Install Dependencies
       run: flutter pub get
 
+    - name: Create .env file
+      run: echo "OPEN_API_KEY=${{ secrets.OPEN_AI_API_KEY }}" > .env
+
     - name: Generate env.g.dart
       run: dart run build_runner build --delete-conflicting-outputs
+
+    - name: Check for .env and env.g.dart
+      run: |
+        echo "Checking for .env and env.g.dart"
+        ls -l .env
+        ls -l lib/env/env.g.dart
 
     - name: Build Web
       run: flutter build web --release
@@ -36,6 +42,6 @@ jobs:
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
-        github_token: ${{ secrets.STATIC_DEPLOY_KEY }} # repository에서 사용할 시크릿 키 이름
+        github_token: ${{ secrets.STATIC_DEPLOY_KEY }}
         publish_dir: build/web
         publish_branch: gh-pages
