@@ -1,0 +1,179 @@
+[33mcommit 47f3e031e2846e1fd28e1f33cbb254263a2370c9[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m
+Author: 0xcplus <choi1058cjf@gmail.com>
+Date:   Thu Sep 26 04:59:16 2024 +0900
+
+    wait
+
+[33mcommit 6d94e4e947f80d21c496887dbdec21b3a2f38b2f[m
+Author: 0xcplus <choi1058cjf@gmail.com>
+Date:   Thu Sep 26 04:57:20 2024 +0900
+
+    Windows .exe, and change the root of local file
+
+[33mcommit 937236b782d045811b6b57418a2db6102ba6707a[m[33m ([m[1;31morigin/main[m[33m)[m
+Author: 0xcplus <choi1058cjf@gmail.com>
+Date:   Wed Sep 25 20:49:53 2024 +0900
+
+    the new challanger : build file!
+
+[33mcommit c771dbbba381d16c0dc383a1f6b9c5205b65eb6f[m
+Author: 0xcplus <choi1058cjf@gmail.com>
+Date:   Wed Sep 25 20:06:34 2024 +0900
+
+    build_runner and env.g.dart has fallen.
+
+[33mcommit b42c55a0e0f38156805847aa39cfbb93c47fe7c5[m
+Author: 0xcplus <choi1058cjf@gmail.com>
+Date:   Wed Sep 25 19:54:20 2024 +0900
+
+    experim.
+
+[33mcommit ceef63d78acc882e1182ae2e2bef33b0239ab2a7[m
+Author: 0xcplus <choi1058cjf@gmail.com>
+Date:   Wed Sep 25 18:28:20 2024 +0900
+
+    plzzlzl
+
+[33mcommit 1b8661645586a5f2e3a49a881168b68ca8ee61cd[m
+Author: 0xcplus <choi1058cjf@gmail.com>
+Date:   Wed Sep 25 18:11:11 2024 +0900
+
+    holy error with old code; OPEN_ai_key
+
+[33mcommit 38dd7117c8b4adf25cf493db2c8c826a8d650e0e[m
+Author: 0xcplus <choi1058cjf@gmail.com>
+Date:   Wed Sep 25 18:00:33 2024 +0900
+
+    env.dart error fixed
+
+[33mcommit b5e77aec1362dc85b8dd87eefceab68c25269455[m
+Author: 0xcplus <choi1058cjf@gmail.com>
+Date:   Wed Sep 25 17:50:59 2024 +0900
+
+    env.dart error
+
+[33mcommit 99d05201d6e09d0bdf14cf1eb2aea098b9c041d3[m
+Author: 0xcplus <choi1058cjf@gmail.com>
+Date:   Wed Sep 25 17:48:38 2024 +0900
+
+    JG DIFF
+
+[33mcommit 59a8228d86da9c2437e07f1bf8ddb77be82f6486[m
+Author: 0xcplus <choi1058cjf@gmail.com>
+Date:   Wed Sep 25 17:45:29 2024 +0900
+
+    chage is for the order of deploy.yml, not pubspec
+
+[33mcommit 715240b8452ad887ab5431c8abfe086469f08ba0[m
+Author: 0xcplus <choi1058cjf@gmail.com>
+Date:   Wed Sep 25 17:39:53 2024 +0900
+
+    pubspec.yaml code order change- .env and env.g.dart
+
+[33mcommit c0d8e2f1d006dfb2ade5e1e319f5da65f98f725c[m
+Author: 0xcplus <choi1058cjf@gmail.com>
+Date:   Wed Sep 25 17:34:22 2024 +0900
+
+    maybe
+
+[33mcommit d05ca793dfede40fc2998215da94ac7ba4017e9a[m
+Author: 0xcplus <choi1058cjf@gmail.com>
+Date:   Wed Sep 25 17:26:45 2024 +0900
+
+    Wrong version in deploy.yml
+
+[33mcommit 2f530cf6549093c95c3ba1e3940f124257b0dfa3[m
+Author: 0xcplus <choi1058cjf@gmail.com>
+Date:   Wed Sep 25 17:21:51 2024 +0900
+
+    plz
+
+[33mcommit 1f39ab096310693b5728702e4711b49679f1b5fd[m
+Author: 0xcplus <choi1058cjf@gmail.com>
+Date:   Wed Sep 25 17:16:11 2024 +0900
+
+    perhaps
+
+[33mcommit a3b1245e29873428f9256a63704353a7db747271[m
+Author: 0xcplus <choi1058cjf@gmail.com>
+Date:   Wed Sep 25 17:14:01 2024 +0900
+
+    Adjust Dart SDK and build_runner version
+
+[33mcommit 72a3e99327b8eb0aa43b207e2e59edb3e6f5870d[m
+Author: 0xcplus <choi1058cjf@gmail.com>
+Date:   Wed Sep 25 17:12:01 2024 +0900
+
+    Update build_runner version for compatibility
+
+[33mcommit 92d86a7cd7345f6ec03ffba0cd6ea9eef0cb4615[m
+Author: 0xcplus <choi1058cjf@gmail.com>
+Date:   Wed Sep 25 17:09:43 2024 +0900
+
+    help
+
+[33mcommit 69a4ab0bcc084a450e2da9c4c1da7413b97b6c65[m
+Author: 0xcplus <choi1058cjf@gmail.com>
+Date:   Wed Sep 25 17:08:37 2024 +0900
+
+    help
+
+[33mcommit d3316140bdca8b84072eefe01818ae169b878450[m
+Author: 0xcplus <choi1058cjf@gmail.com>
+Date:   Wed Sep 25 17:02:27 2024 +0900
+
+    hehe igotcrazy
+
+[33mcommit d7ce5bf22952798757615ab2b2e9b98c48681502[m
+Author: 0xcplus <choi1058cjf@gmail.com>
+Date:   Wed Sep 25 16:58:16 2024 +0900
+
+    again
+
+[33mcommit 93cd4ff75e3220be131ea13f29825683369dcaa7[m
+Author: 0xcplus <choi1058cjf@gmail.com>
+Date:   Wed Sep 25 16:55:22 2024 +0900
+
+    SDK version
+
+[33mcommit b594ed299e55ab0866e62d6b6de5641ff64b6644[m
+Author: 0xcplus <choi1058cjf@gmail.com>
+Date:   Wed Sep 25 16:48:50 2024 +0900
+
+    deploy.yml was in wronk direction...
+
+[33mcommit 4c71413f20f203c3c6d728869029d42e0c6becf8[m
+Author: 0xcplus <choi1058cjf@gmail.com>
+Date:   Wed Sep 25 15:44:22 2024 +0900
+
+    plzbe, agian
+
+[33mcommit 3b27c7b24ce44337072e1b007912bda94674b447[m
+Author: 0xcplus <choi1058cjf@gmail.com>
+Date:   Wed Sep 25 14:21:06 2024 +0900
+
+    change key
+
+[33mcommit a0e56836fe55ed9367a4dbaa152a7d1e00c48ef4[m
+Author: 0xcplus <choi1058cjf@gmail.com>
+Date:   Wed Sep 25 14:18:16 2024 +0900
+
+    possible error
+
+[33mcommit 9217a4deaed4b09d114c42aa6833e08ab30bc901[m
+Author: 0xcplus <choi1058cjf@gmail.com>
+Date:   Wed Sep 25 14:10:59 2024 +0900
+
+    plzbe
+
+[33mcommit 15a207032a94d5adfd563431fb867e7c639af067[m
+Author: 0xcplus <choi1058cjf@gmail.com>
+Date:   Wed Sep 25 13:59:12 2024 +0900
+
+    GitIgnore
+
+[33mcommit 174238a14d24185860be5dd8d2c3a82d7dc9a3a9[m
+Author: 0xcplus <choi1058cjf@gmail.com>
+Date:   Wed Sep 25 13:31:31 2024 +0900
+
+    fisrt commit
