@@ -32,9 +32,12 @@ jobs:
     - name: Build Web
       run: flutter build web --release
 
-    - name: Add mobile-web-app-capable meta tag and base href
+    - name: Update base href and mobile-web-app-capable meta tag
       run: |
-        sed -i 's|</head>|<meta name="mobile-web-app-capable" content="yes">\n<base href="/Oslar/">\n</head>|g' build/web/index.html
+        sed -i 's|<base href=".*">|<base href="/Oslar/">|g' build/web/index.html
+        if ! grep -q 'meta name="mobile-web-app-capable"' build/web/index.html; then
+          sed -i 's|</head>|<meta name="mobile-web-app-capable" content="yes">\n</head>|g' build/web/index.html
+        fi
 
     - name: Add .nojekyll
       run: echo > build/web/.nojekyll
