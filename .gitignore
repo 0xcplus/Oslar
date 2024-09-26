@@ -1,6 +1,6 @@
 #OPENAI_API_KEY
 .env
-lib/env/env.g.dart
+assets/.env
 
 # Miscellaneous
 *.class
