@@ -29,12 +29,9 @@ jobs:
 
     - name: Build Web
       run: flutter build web --release
-
-    - name: Check Entire Project Directory Structure
-      run: tree
     
     - name: Update the .env file with secrets after build
-      run: echo "OPEN_AI_API_KEY=${{ secrets.OPEN_AI_API_KEY }}" > build/web/assets/assets/config/.env
+      run: echo "OPEN_AI_API_KEY=${{ secrets.OPEN_AI_API_KEY }}" >> build/web/assets/assets/config/.env
 
     - name: Update base href and mobile-web-app-capable meta tag
       run: |
