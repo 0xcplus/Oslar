@@ -27,6 +27,9 @@ jobs:
     - name: Create .env file
       run: echo "OPEN_AI_API_KEY=${{ secrets.OPEN_AI_API_KEY }}" > .env #assets/config/.env
 
+    - name: Create env.g.dart
+      run: dart run build_runner build
+
     - name: Build Web
       run: flutter build web --release
     
