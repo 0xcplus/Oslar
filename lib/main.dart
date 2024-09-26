@@ -21,7 +21,7 @@ Future<void> main() async{
     apiKey = await fetchApiKey();
     errorFind = 'worked!';
   } catch (e) {
-    print('Error fetching API key: $e');
+    print('Error!!! fetching API key: $e');
     errorFind = '$e';
 
     await dotenv.load(fileName: "assets/config/.env");
