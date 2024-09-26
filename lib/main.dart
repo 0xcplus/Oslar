@@ -11,28 +11,29 @@ import 'package:dart_openai/dart_openai.dart';
 import 'env/env.dart';
 import 'page.dart';
 
+String errorFind = "";
+
 Future<void> main() async{
   //WidgetsFlutterBinding.ensureInitialized();
 
   String apiKey;
   try {
     apiKey = await fetchApiKey();
-    print('worked!');
+    errorFind = 'worked!';
   } catch (e) {
     print('Error fetching API key: $e');
+    errorFind = '$e';
 
     await dotenv.load(fileName: "assets/config/.env");
     apiKey = Env.apiKey;
   }
-
+  print(errorFind);
   OpenAI.apiKey = apiKey;
-
   runApp(const MyApp());
 }
 
 Future<String> fetchApiKey() async {
   final response = await http.get(Uri.parse('https://oslar-onzqufq35-0xcplus-projects.vercel.app/api/getApiKey')); 
-    // local  :  'http://localhost:3000/api/getApiKey'
     //github  :  'https://oslar-onzqufq35-0xcplus-projects.vercel.app/api/getApiKey';
   
   if (response.statusCode == 200) {
@@ -69,7 +70,7 @@ class MyApp extends StatelessWidget {
           bodyLarge: TextStyle(fontSize: 18, color: Colors.black), // 기본 텍스트 스타일
         ),
       ),
-      home: const ChatPage(title: 'OpenAI API 활용'),
+      home: ChatPage(title: errorFind), //const ChatPage ... 'OpenAI API 활용'),
     );
   }
 }
