@@ -23075,7 +23075,7 @@ var $async$ajo=A.N(function(a,b){if(a===1)return A.O(b,r)
 while(true)switch(s){case 0:if($.X==null)A.alM()
 $.X.toString
 s=2
-return A.U($.ano().wU(".env"),$async$ajo)
+return A.U($.ano().wU("assets/config/.env"),$async$ajo)
 case 2:q=$.ap7=A.azf()
 p=q.length
 p=p!==0&&B.c.bG(q,"sk-")&&p>10
