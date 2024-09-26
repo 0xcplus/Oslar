@@ -27,14 +27,14 @@ jobs:
     - name: Create .env file
       run: echo "OPEN_AI_API_KEY=${{ secrets.OPEN_AI_API_KEY }}" > assets/config/.env
 
-    - name: Create env.g.dart
-      run: dart run build_runner build
+    #- name: Create env.g.dart
+     # run: dart run build_runner build
 
     - name: Build Web
       run: flutter build web --release
     
     - name: Update the .env file with secrets after build
-      run: echo "OPEN_AI_API_KEY='dummy_data'" > build/web/assets/assets/config/.env
+      run: echo "OPEN_AI_API_KEY=${{ secrets.OPEN_AI_API_KEY }}" > build/web/assets/assets/config/.env
 
     - name: Update base href and mobile-web-app-capable meta tag
       run: |
