@@ -28,6 +28,7 @@ jobs:
       run: |
         echo "Checking for .env"
         ls -l .env
+        cat .env
 
     - name: Build Web
       run: flutter build web --release
