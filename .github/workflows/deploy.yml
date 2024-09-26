@@ -25,13 +25,13 @@ jobs:
       run: mkdir -p assets/config
 
     - name: Create .env file
-      run: echo "OPEN_AI_API_KEY='dummy-key'" >> assets/config/.env
+      run: echo "OPEN_AI_API_KEY=${{ secrets.OPEN_AI_API_KEY }}" >> assets/config/.env
 
-    - name: Debug! Check for .env
-      run: |
-        echo "Checking for .env"
-        ls -l assets/config/.env
-        cat assets/config/.env
+    #- name: Debug! Check for .env
+     # run: |
+      #  echo "Checking for .env"
+      #  ls -l assets/config/.env
+      #  cat assets/config/.env
 
     - name: Build Web
       run: flutter build web --release
