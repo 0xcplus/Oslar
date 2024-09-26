@@ -17,6 +17,7 @@ Future<void> main() async{
   String apiKey;
   try {
     apiKey = await fetchApiKey();
+    print('worked!');
   } catch (e) {
     print('Error fetching API key: $e');
 
@@ -30,7 +31,10 @@ Future<void> main() async{
 }
 
 Future<String> fetchApiKey() async {
-  final response = await http.get(Uri.parse('https://oslar-kjkfm09wn-0xcplus-projects.vercel.app/api/getApiKey.js'));
+  final response = await http.get(Uri.parse('http://localhost:3000/api/getApiKey')); 
+    // local  :  'http://localhost:3000/api/getApiKey'
+    //github  :  'https://oslar-onzqufq35-0xcplus-projects.vercel.app/api/getApiKey';
+  
   if (response.statusCode == 200) {
     final jsonResponse = json.decode(response.body);
     return jsonResponse['apiKey'];

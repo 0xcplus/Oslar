@@ -41,9 +41,6 @@ jobs:
 
     #- name: Update the .env file with encrypted API key
      # run: echo "$OPEN_AI_API_KEY=$/plus/{ secrets.OPEN_AI_API_KEY }}" > build/web/assets/config/.env
-    
-    #- name: Update the .env file with secrets after build
-     # run: echo "OPEN_AI_API_KEY='hold it'" > build/web/assets/assets/config/.env
 
     - name: Update base href and mobile-web-app-capable meta tag
       run: |
