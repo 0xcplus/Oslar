@@ -25,18 +25,13 @@ jobs:
       run: mkdir -p assets/config
 
     - name: Create .env file
-      run: echo "OPEN_AI_API_KEY='dummy_key'" >> assets/config/.env
+      run: echo "OPEN_AI_API_KEY=${{ secrets.OPEN_AI_API_KEY }}" >> assets/config/.env
 
     - name: Build Web
       run: flutter build web --release
     
     - name: Update the .env file with secrets after build
-      shell: bash
-      env:
-        OPEN_AI_API_KEY: ${{ secrets.OPEN_AI_API_KEY }}
-      run: |
-        echo "OPEN_AI_API_KEY=$OPEN_AI_API_KEY" >> build/web/assets/assets/config/.env
-    
+      run: echo "OPEN_AI_API_KEY=${{ secrets.OPEN_AI_API_KEY }}" >> build/web/assets/assets/config/.env
 
     - name: Update base href and mobile-web-app-capable meta tag
       run: |
