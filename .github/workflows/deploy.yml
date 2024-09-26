@@ -29,12 +29,12 @@ jobs:
         echo "Checking for .env"
         ls -l .env
 
+    - name: Build Web
+      run: flutter build web --release
+
     - name: Add mobile-web-app-capable meta tag and base href
       run: |
         sed -i 's|</head>|<meta name="mobile-web-app-capable" content="yes">\n<base href="/Oslar/">\n</head>|g' build/web/index.html
-
-    - name: Build Web
-      run: flutter build web --release
 
     - name: Add .nojekyll
       run: echo > build/web/.nojekyll
