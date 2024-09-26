@@ -15,7 +15,7 @@ export default function handler(req, res) {
 
   // GET 요청 처리
   if (req.method === 'GET') {
-    res.status(200).json(apiKey);
+    res.status(200).json({apiKey});
   } else {
     res.status(405).end(); // 허용되지 않은 메서드에 대한 405 응답
   }
