@@ -11,7 +11,7 @@ import 'page.dart';
 
 Future<void> main() async{
   WidgetsFlutterBinding.ensureInitialized();
-  await dotenv.load(fileName:"assets/config/.env");
+  await dotenv.load(fileName: ".env");//"assets/.env");
 
   OpenAI.apiKey = Env.apiKey;
   runApp(const MyApp());
