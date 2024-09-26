@@ -23233,7 +23233,7 @@ return A.Q($async$T4,r)},
 ajp(){var s=0,r=A.R(t.N),q,p
 var $async$ajp=A.M(function(a,b){if(a===1)return A.O(b,r)
 while(true)switch(s){case 0:s=3
-return A.S(A.aHW(A.eQ("https://oslar-onzqufq35-0xcplus-projects.vercel.app/api/getApiKey")),$async$ajp)
+return A.S(A.aHW(A.eQ("https://https://oslar-h817.vercel.app/api/getApiKey")),$async$ajp)
 case 3:p=b
 if(p.b===200){q=J.ky(B.bd.eE(A.aHG(A.aFC(p.e).c.a.h(0,"charset")).eE(p.w)),"apiKey")
 s=1
