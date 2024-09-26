@@ -1,7 +1,7 @@
 import 'package:envied/envied.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-@Envied(path: ".env")
+@Envied(path: "assets/config/.env")
 abstract class Env {
   @EnviedField(varName: 'OPEN_AI_API_KEY')
   static String get apiKey {

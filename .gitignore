@@ -1,6 +1,6 @@
 #OPENAI_API_KEY
-.env
-assets/.env
+#.env
+assets/config/.env
 
 # Miscellaneous
 *.class

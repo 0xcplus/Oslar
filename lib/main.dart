@@ -1,14 +1,17 @@
+//flutter
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
+//openai
 import 'package:dart_openai/dart_openai.dart';
+
+//etc.
 import 'env/env.dart';
 import 'page.dart';
 
 Future<void> main() async{
   WidgetsFlutterBinding.ensureInitialized();
-  await dotenv.load(fileName: kIsWeb ? "assets/.env" : ".env");
+  await dotenv.load(fileName:"assets/config/.env");
 
   OpenAI.apiKey = Env.apiKey;
   runApp(const MyApp());
