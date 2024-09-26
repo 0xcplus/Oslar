@@ -1,7 +1,5 @@
 #OPENAI_API_KEY
 assets/config/.env
-#.env
-#lib/env/env.g.dart
 
 # Miscellaneous
 *.class
@@ -46,3 +44,4 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+.vercel
