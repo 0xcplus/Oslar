@@ -33,7 +33,7 @@ Future<void> main() async{
 }
 
 Future<String> fetchApiKey() async {
-  final response = await http.get(Uri.parse('https://oslar-h817.vercel.app/api/getApiKey'));
+  final response = await http.get(Uri.parse('https://solar-liart.vercel.app/api/getApiKey'));
   
   if (response.statusCode == 200) {
     final jsonResponse = json.decode(response.body);
