@@ -2,11 +2,12 @@
   "name": "oslar",
   "version": "1.0.0",
   "description": "A new Flutter project.",
-  "main": "index.js",
+  "main": "api/getApiKey.js",
   "directories": {
     "lib": "lib"
   },
   "scripts": {
+    "start": "node api/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

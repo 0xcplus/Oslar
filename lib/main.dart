@@ -1,6 +1,8 @@
 //flutter
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'dart:convert';
 
 //openai
 import 'package:dart_openai/dart_openai.dart';
@@ -10,11 +12,34 @@ import 'env/env.dart';
 import 'page.dart';
 
 Future<void> main() async{
-  WidgetsFlutterBinding.ensureInitialized();
-  await dotenv.load(fileName: "assets/config/.env");
+  //WidgetsFlutterBinding.ensureInitialized();
+  //await dotenv.load(fileName: "assets/config/.env");
+  //OpenAI.apiKey = Env.apiKey;
 
-  OpenAI.apiKey = Env.apiKey;
+  String apiKey;
+  try {
+    apiKey = await fetchApiKey();
+  } catch (e) {
+    print('Error fetching API key: $e');
+
+    await dotenv.load(fileName: "assets/config/.env");
+    apiKey = Env.apiKey;
+  }
+
+  //String apiKey = await fetchApiKey();
+  OpenAI.apiKey = apiKey;
+
   runApp(const MyApp());
+}
+
+Future<String> fetchApiKey() async {
+  final response = await http.get(Uri.parse('https://oslar-kjkfm09wn-0xcplus-projects.vercel.app/api/getApiKey.js'));
+  if (response.statusCode == 200) {
+    final jsonResponse = json.decode(response.body);
+    return jsonResponse['apiKey'];
+  } else {
+    throw Exception('Failed to load API key');
+  }
 }
 
 class MyApp extends StatelessWidget {
