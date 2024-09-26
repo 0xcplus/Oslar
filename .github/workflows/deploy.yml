@@ -25,7 +25,7 @@ jobs:
       run: mkdir -p assets/config
 
     - name: Create .env file
-      run: echo "OPEN_AI_API_KEY='dummy-key' >> assets/config/.env
+      run: echo "OPEN_AI_API_KEY='dummy-key'" >> assets/config/.env
 
     - name: Debug! Check for .env
       run: |
