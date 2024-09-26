@@ -2,10 +2,10 @@ export default function handler(req, res) {
   const apiKey = process.env.YOUR_API_KEY; // 환경 변수에서 API 키 가져오기
 
   // CORS 헤더 설정
-  res.setHeader('Access-Control-Allow-Origin', 'https://0xcplus.github.io'); // 특정 출처 허용
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   res.setHeader('Access-Control-Allow-Credentials', 'true');
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version');
 
   // OPTIONS 요청 처리
   if (req.method === 'OPTIONS') {
