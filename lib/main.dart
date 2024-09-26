@@ -13,8 +13,6 @@ import 'page.dart';
 
 Future<void> main() async{
   //WidgetsFlutterBinding.ensureInitialized();
-  //await dotenv.load(fileName: "assets/config/.env");
-  //OpenAI.apiKey = Env.apiKey;
 
   String apiKey;
   try {
@@ -26,7 +24,6 @@ Future<void> main() async{
     apiKey = Env.apiKey;
   }
 
-  //String apiKey = await fetchApiKey();
   OpenAI.apiKey = apiKey;
 
   runApp(const MyApp());
