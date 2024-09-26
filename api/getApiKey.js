@@ -3,8 +3,8 @@ export default function handler(req, res) {
 
   // CORS 헤더 설정
   res.setHeader('Access-Control-Allow-Origin', '*'); // 모든 출처 허용
-  res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS'); // 허용할 HTTP 메서드
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type'); // 허용할 헤더
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS'); // 허용할 HTTP 메서드
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization'); // 허용할 헤더
 
   // OPTIONS 요청 처리
   if (req.method === 'OPTIONS') {
