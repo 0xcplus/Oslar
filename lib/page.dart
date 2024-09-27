@@ -1,8 +1,11 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
+
+import 'package:url_launcher/url_launcher.dart';
+import 'dart:async';
 import 'ui.dart';
 import 'chatgpt.dart';
 
+String url = 'https://github.com/0xcplus/Oslar/';
 StreamController<String> _streamController = StreamController<String>(); 
 
 class ChatPage extends StatefulWidget {
@@ -15,6 +18,7 @@ class ChatPage extends StatefulWidget {
 
 class _ChatPageState extends State<ChatPage> {
   List messageList = [];
+  Color infLinkColor = const Color.fromARGB(255, 126, 141, 134);
 
   void setStateMessage(target, text) {
     setState(() {
@@ -42,18 +46,120 @@ class _ChatPageState extends State<ChatPage> {
       appBar: AppBar(
         title: Text(
           widget.title,
-          style: const TextStyle(
-            fontFamily: 'Helvetica',
+          style: initTextStyle(fontSize: 30, color:const Color.fromARGB(255, 248, 248, 248),
           ),),
-        elevation: 5,
+        elevation: 4,
         backgroundColor: const Color.fromARGB(255, 48, 48, 48),
       ),
+
       body:Column(
         children: <Widget>[
           ChatArea(messageList: messageList),
           InputTextArea(updateMessag : setStateMessage)
         ],
-      )
+      ),
+
+      drawer: Drawer(
+        child: ListView(
+          children: [
+            UserAccountsDrawerHeader(
+              currentAccountPicture: Container(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    initShadowSetting()
+                  ],
+                ),
+
+                child: const CircleAvatar(
+                  radius: 50,
+                  backgroundImage: AssetImage('assets/images/oslar.png'), // 이미지
+                ),
+              ),
+
+              //계정 이름
+              accountName: Text(
+                'Oslar', //수정 요망
+                style: initTextStyle(
+                  fontSize: 25,
+                  color:const Color.fromARGB(255, 40, 40, 40)),
+              ) ,
+
+              //계정 이메일
+              accountEmail: MouseRegion(
+                onEnter: (_) {
+                  setState(() {
+                    infLinkColor = const Color.fromARGB(255, 61, 55, 148);
+                  });
+                },
+                onExit: (_) {
+                  setState(() {
+                    infLinkColor = const Color.fromARGB(255, 126, 141, 134);
+                  });
+                },
+                child: GestureDetector(
+                  onTap: () async{
+                    final Uri uri = Uri.parse(url);
+                    if (await canLaunchUrl(uri)){
+                      await launchUrl(uri);
+                    } else {
+                      throw 'Could not launch $url';
+                    }
+                  },
+                  child: Text(
+                    url,
+                    style: initTextStyle(
+                      color:infLinkColor, 
+                      decoration: TextDecoration.underline,
+                    )
+                  ),
+                ),
+              ),
+
+              decoration: BoxDecoration(
+                color: const Color.fromARGB(255, 85, 225, 160),
+                borderRadius: const BorderRadius.only(
+                  bottomLeft: Radius.circular(10.0),
+                  bottomRight: Radius.circular(10.0),
+                ),
+                boxShadow: [
+                    initShadowSetting(spreadRadius: 3, blurRadius: 5)
+                  ],
+              ),
+            ),
+
+            //홈
+            ListTile(
+              leading: Icon(Icons.home),
+              //iconColor: Color,
+              //focusColor: Color,
+              title:Text('홈', style: initTextStyle()),
+              onTap:(){},
+              trailing: Icon(Icons.navigate_next),
+            ),
+
+            //채팅
+            ListTile(
+              leading: Icon(Icons.chat),
+              //iconColor: Color,
+              //focusColor: Color,
+              title:Text('채팅', style: initTextStyle()),
+              onTap:(){},
+              trailing: Icon(Icons.navigate_next),
+            ),
+
+             //설정
+            ListTile(
+              leading: Icon(Icons.settings),
+              //iconColor: Color,
+              //focusColor: Color,
+              title:Text('설정', style: initTextStyle()),
+              onTap:(){},
+              trailing: Icon(Icons.navigate_next),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -82,7 +188,7 @@ class _ChatAreaState extends State<ChatArea>{
         child:ListView.builder(
           controller: scrollController,
           itemCount:widget.messageList.length,
-          itemBuilder: (BuildContext context, int index){ // 메세지
+          itemBuilder: (BuildContext context, int index){
             bool isUser = (widget.messageList[index]['target']!='Assistant');
             return isUser? buildMyMsg(context, widget.messageList[index])
             :buildOtherMsg(context, widget.messageList[index]);

@@ -11,6 +11,7 @@ import 'package:dart_openai/dart_openai.dart';
 import 'env/env.dart';
 import 'page.dart';
 
+const double appSize = 0.7; //ui.dart 반영
 String errorFind = "";
 
 Future<void> main() async{
@@ -19,15 +20,11 @@ Future<void> main() async{
   String apiKey;
   try {
     apiKey = await fetchApiKey();
-    errorFind = 'worked!';
   } catch (e) {
     print('Error!!! fetching API key: $e');
-    errorFind = '$e';
-
     await dotenv.load(fileName: "assets/config/.env");
     apiKey = Env.apiKey;
   }
-  print(errorFind);
   OpenAI.apiKey = apiKey;
   runApp(const MyApp());
 }
@@ -52,22 +49,29 @@ class MyApp extends StatelessWidget {
       title: 'OpenAI',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color.fromARGB(255, 42, 42, 42),
+          seedColor: const Color.fromARGB(255, 70, 70, 70),
           brightness: Brightness.light, // 라이트 모드
         ).copyWith(
-          primary: const Color.fromARGB(255, 42, 42, 42), // 주 테마 색상
+          primary: const Color.fromARGB(255, 71, 71, 71), // 주 테마 색상
           onPrimary: Colors.white, // 주 테마 색상의 대비 텍스트
-          secondary: Colors.green, // 보조 색상
-          onSecondary: Colors.white, // 보조 색상의 대비 텍스트
-          surface: Colors.white, // 표면 색상 (카드, 모달 등)
+          secondary: const Color.fromARGB(255, 100, 241, 171), // 보조 색상
+          onSecondary: const Color.fromARGB(255, 242, 242, 242), // 보조 색상의 대비 텍스트
+          surface: const Color.fromARGB(255, 238, 238, 238), // 표면 색상 (카드, 모달 등)
           onSurface: Colors.black, // 표면 색상에 쓰일 텍스트 색상
-          error: Colors.red, // 에러 색상
+          error: const Color.fromARGB(255, 231, 141, 135), // 에러 색상
           onError: Colors.white, // 에러 색상의 대비 텍스트
         ),
         useMaterial3: false, // Material 3 스타일 사용
+
+        // 기본 텍스트 스타일
         textTheme: const TextTheme(
-          bodyLarge: TextStyle(fontSize: 18, color: Colors.black), // 기본 텍스트 스타일
+          bodyLarge: TextStyle(
+            fontSize: 22*appSize, 
+            fontFamily: 'NanumGothic',
+            color: Color.fromARGB(255, 44, 44, 44),
+            ), 
         ),
+
       ),
       home: const ChatPage(title: 'OpenAI API 활용'),
     );

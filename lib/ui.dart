@@ -1,15 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-const double appSize = 0.7; //비율 0.7 권장.
+const double appSize = 0.7; //main.dart 반영. 비율 0.7 권장.
 const double radius = 40*appSize;
 const roundedCorner = Radius.circular(22*appSize);
 
-TextStyle initTextStyle({String font='NanumGothic', double fontSize=22}) { 
-  return TextStyle(
-    fontFamily: font,
-    fontSize: fontSize*appSize,
-    color: const Color.fromARGB(255, 44, 44, 44),
+TextStyle initTextStyle(
+  { String font='NanumGothic', 
+  double fontSize=22, 
+  color=const Color.fromARGB(255, 44, 44, 44),
+  decoration=TextDecoration.none}) { 
+    return TextStyle(
+      fontFamily: font,
+      fontSize: fontSize*appSize,
+      color: color,
+      decoration: decoration,
+    );
+}
+
+BoxShadow initShadowSetting({double spreadRadius=5, double blurRadius=8}){
+    return BoxShadow(
+      color: Colors.black.withOpacity(0.2),
+      spreadRadius: spreadRadius,
+      blurRadius: blurRadius,
+      offset: const Offset(0, 4),
   );
 }
 
@@ -17,7 +31,7 @@ Widget buildMyMsg(BuildContext context, Map message) {
   final String time = DateFormat('HH:mm').format(message['time']);
 
   return Padding(
-    padding: const EdgeInsets.fromLTRB(0*appSize,15*appSize,10*appSize,3*appSize),
+    padding: const EdgeInsets.fromLTRB(0*appSize,20*appSize,10*appSize,0*appSize),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.end,
       crossAxisAlignment: CrossAxisAlignment.end,
