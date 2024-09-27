@@ -30,17 +30,11 @@ jobs:
     - name: Create config directory if not exists
       run: mkdir -p assets/config
 
-    - name: Create .env file
+    - name: Create .env file with dummy data
       run: echo "OPEN_AI_API_KEY='dummy_data'" > assets/config/.env
-
-    #- name: Create env.g.dart
-     # run: dart run build_runner build
 
     - name: Build Web
       run: flutter build web --release
-
-    #- name: Update the .env file with encrypted API key
-     # run: echo "$OPEN_AI_API_KEY=$/plus/{ secrets.OPEN_AI_API_KEY }}" > build/web/assets/config/.env
 
     - name: Update base href and mobile-web-app-capable meta tag
       run: |

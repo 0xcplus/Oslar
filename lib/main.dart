@@ -69,7 +69,7 @@ class MyApp extends StatelessWidget {
           bodyLarge: TextStyle(fontSize: 18, color: Colors.black), // 기본 텍스트 스타일
         ),
       ),
-      home: ChatPage(title: errorFind), //const ChatPage ... 'OpenAI API 활용'),
+      home: const ChatPage(title: 'OpenAI API 활용'),
     );
   }
 }
