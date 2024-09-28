@@ -5,6 +5,7 @@ const double appSize = 0.7; //main.dart 반영. 비율 0.7 권장.
 const double radius = 40*appSize;
 const roundedCorner = Radius.circular(22*appSize);
 
+//글꼴 기초. main.dart에서 적용되는 부분도 있으나 만들어둠.
 TextStyle initTextStyle(
   { String font='NanumGothic', 
   double fontSize=22, 
@@ -59,7 +60,7 @@ Widget buildMyMsg(BuildContext context, Map message) {
                   bottomRight: roundedCorner
                 )
               ),
-              child: Text(
+              child: SelectableText(
                 message['text'],
                 style: initTextStyle(),
               ),
@@ -146,7 +147,7 @@ Widget buildOtherMsg(BuildContext context, Map message) {
                             width: 2*appSize,
                           ),
                         ),
-                        child: Text(
+                        child: SelectableText(
                           message['text'],
                           style: initTextStyle(),
                         ),

@@ -36,6 +36,10 @@ jobs:
     - name: Build Web
       run: flutter build web --release
 
+    - name: Change favicon
+      run: |
+          mv build/web/favicon.png assets/images/favicon.png
+
     - name: Update base href and mobile-web-app-capable meta tag
       run: |
         sed -i 's|<base href=".*">|<base href="/Oslar/">|g' build/web/index.html

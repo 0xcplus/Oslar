@@ -1,13 +1,25 @@
 import 'package:flutter/material.dart';
+//import 'package:flutter/services.dart';
 
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:async';
-import 'ui.dart';
-import 'chatgpt.dart';
+import '../UI/chatpage_ui.dart';
+import '../function/openai.dart';
 
+//지정
 String url = 'https://github.com/0xcplus/Oslar/';
 StreamController<String> _streamController = StreamController<String>(); 
 
+Map<String, dynamic> _mapMessage(String target, {String text='생각 중...'}){
+  final time = DateTime.now();
+  return {
+    'target':target,
+    'text':text,
+    'time':time
+  };
+}
+
+//페이지 구성
 class ChatPage extends StatefulWidget {
   const ChatPage({super.key, required this.title});
   final String title;
@@ -130,32 +142,32 @@ class _ChatPageState extends State<ChatPage> {
 
             //홈
             ListTile(
-              leading: Icon(Icons.home),
+              leading: const Icon(Icons.home),
               //iconColor: Color,
               //focusColor: Color,
               title:Text('홈', style: initTextStyle()),
               onTap:(){},
-              trailing: Icon(Icons.navigate_next),
+              trailing: const Icon(Icons.navigate_next),
             ),
 
             //채팅
             ListTile(
-              leading: Icon(Icons.chat),
+              leading: const Icon(Icons.chat),
               //iconColor: Color,
               //focusColor: Color,
               title:Text('채팅', style: initTextStyle()),
               onTap:(){},
-              trailing: Icon(Icons.navigate_next),
+              trailing: const Icon(Icons.navigate_next),
             ),
 
              //설정
             ListTile(
-              leading: Icon(Icons.settings),
+              leading: const Icon(Icons.settings),
               //iconColor: Color,
               //focusColor: Color,
               title:Text('설정', style: initTextStyle()),
               onTap:(){},
-              trailing: Icon(Icons.navigate_next),
+              trailing: const Icon(Icons.navigate_next),
             ),
           ],
         ),
@@ -189,7 +201,7 @@ class _ChatAreaState extends State<ChatArea>{
           controller: scrollController,
           itemCount:widget.messageList.length,
           itemBuilder: (BuildContext context, int index){
-            bool isUser = (widget.messageList[index]['target']!='Assistant');
+            bool isUser = (widget.messageList[index]['target']!='Assistant'); // 수정 요망
             return isUser? buildMyMsg(context, widget.messageList[index])
             :buildOtherMsg(context, widget.messageList[index]);
           }
@@ -208,57 +220,77 @@ class InputTextArea extends StatefulWidget {
 }
 
 class _InputTextAreaState extends State<InputTextArea> {
+  final FocusNode focusNode = FocusNode();
   final TextEditingController _controller = TextEditingController();
+
+   void _onButtonPressed() {
+    if(_controller.text.isNotEmpty){
+      final text = _controller.text;
+      widget.updateMessag('User', text);
+      _controller.clear();
+    }
+  }
 
   @override
   void dispose(){
+    focusNode.dispose();
     _controller.dispose();
-    //_streamController.close();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context){
-    return Column(
+    return Stack(
+      clipBehavior: Clip.none,
       children: [
-        const Divider(thickness: 1),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(15, 11, 15, 15),
-          child: Row(
-            children:<Widget>[
-              Expanded(
-                child : TextField( //입력창
-                  controller: _controller,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Enter your message',
-                  ),
-                ),
-              ),
-              const SizedBox(width: 15),
-              IconButton(
-                icon: const Icon(Icons.send),
-                onPressed: () {
-                  if(_controller.text.isNotEmpty){
-                    final text = _controller.text;
-                    widget.updateMessag('User', text);
-                    _controller.clear();
-                  }
-                }
-              ),
-            ],
+        Positioned(
+          top: 10,
+          left: 0,
+          right: 0,
+          child: Container(
+            height:100,
+            decoration: BoxDecoration(
+              color: const Color.fromARGB(255, 248, 248, 248),
+              boxShadow: [initShadowSetting(spreadRadius: 5, blurRadius: 12)], // 위로 적용될 그림자 설정
+            ),
           ),
+        ),
+
+        Column(
+          children: [
+            const Divider(thickness: 1),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(15, 11, 15, 15),
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child : KeyboardListener(
+                      focusNode: focusNode,
+                      child : TextField(
+                        controller: _controller,
+                        onSubmitted: (value) {
+                          _onButtonPressed();
+                        },
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Enter your message',
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 15),
+                  IconButton(
+                    icon: const Icon(Icons.send),
+                    onPressed: () {
+                      _onButtonPressed();
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       ],
     );
   }
-}
-
-Map<String, dynamic> _mapMessage(String target, {String text='생각 중...'}){
-  final time = DateTime.now();
-  return {
-    'target':target,
-    'text':text,
-    'time':time
-  };
 }

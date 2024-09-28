@@ -9,7 +9,7 @@ import 'package:dart_openai/dart_openai.dart';
 
 //etc.
 import 'env/env.dart';
-import 'page.dart';
+import 'page/chatpage.dart';
 
 const double appSize = 0.7; //ui.dart 반영
 String errorFind = "";
@@ -18,17 +18,18 @@ Future<void> main() async{
   //WidgetsFlutterBinding.ensureInitialized();
 
   String apiKey;
-  try {
-    apiKey = await fetchApiKey();
-  } catch (e) {
-    print('Error!!! fetching API key: $e');
+  try { apiKey = await fetchApiKey(); }   //GitHub
+  catch (e) {                             //Local
+    print('It could be not the GitHub Pages : $e');
     await dotenv.load(fileName: "assets/config/.env");
     apiKey = Env.apiKey;
   }
+
   OpenAI.apiKey = apiKey;
   runApp(const MyApp());
 }
 
+//favicon.png
 Future<String> fetchApiKey() async {
   final response = await http.get(Uri.parse('https://solar-liart.vercel.app/api/getApiKey'));
   
@@ -46,7 +47,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'OpenAI',
+      title: 'Oslar',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
           seedColor: const Color.fromARGB(255, 70, 70, 70),
@@ -73,7 +74,8 @@ class MyApp extends StatelessWidget {
         ),
 
       ),
-      home: const ChatPage(title: 'OpenAI API 활용'),
+
+      home: const ChatPage(title: 'Oslar'),
     );
   }
 }

@@ -1,7 +1,7 @@
 name: oslar
-description: "A new Flutter project."
+description: "Chat based on ChatGPT"
 publish_to: 'none'
-version: 0.1.0
+version: 1.0.0
 
 environment:
   sdk: ^3.5.3
@@ -33,3 +33,4 @@ flutter:
   - assets/config/.env
   - assets/images/logo.png
   - assets/images/oslar.png
+  - assets/images/favicon.png
