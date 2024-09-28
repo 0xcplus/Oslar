@@ -36,9 +36,8 @@ jobs:
     - name: Build Web
       run: flutter build web --release
 
-    - name: Change favicon
-      run: |
-          mv build/web/favicon.png assets/images/favicon.png
+    - name: Copy favicon to build
+      run: cp assets/images/favicon.png build/web/favicon.png
 
     - name: Update base href and mobile-web-app-capable meta tag
       run: |
