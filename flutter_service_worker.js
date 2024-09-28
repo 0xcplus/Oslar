@@ -5,7 +5,7 @@ const CACHE_NAME = 'flutter-app-cache';
 
 const RESOURCES = {"assets/AssetManifest.json": "5e2c6621755905c26c7bf0db946f2523",
 "assets/assets/images/logo.png": "c652ca72273142a5b75b9eec9458d0b9",
-"assets/assets/images/favicon.png": "a62eaf35bb4ee3c28f6f3c4265b58e15",
+"assets/assets/images/favicon.png": "25a9fb74377256ae34cd819f26e73aa3",
 "assets/assets/images/oslar.png": "4a98df1355e2b3c9bdf5c84558489a8c",
 "assets/AssetManifest.bin.json": "38eb93ce89fafdf05086d2bb3f352d50",
 "assets/shaders/ink_sparkle.frag": "ecc85a2e95f5e9f53123dcaf8cb9b6ce",
@@ -29,7 +29,7 @@ const RESOURCES = {"assets/AssetManifest.json": "5e2c6621755905c26c7bf0db946f252
 "icons/Icon-192.png": "ac9a721a12bbc803b44f645561ecb1e1",
 "icons/Icon-maskable-512.png": "301a7604d45b3e739efc881eb04896ea",
 "icons/Icon-maskable-192.png": "c457ef57daa1d16f64b27b786ec2ea3c",
-"flutter_bootstrap.js": "89b2861389deb3a566161804929761ba",
+"flutter_bootstrap.js": "f7818b7d13d568d13ee81ec61faa6ca7",
 "favicon.png": "a41961cd7fa1c9b60655ae2ca03eff00",
 "flutter.js": "f393d3c16b631f36852323de8e583132",
 "index.html": "abb4e9a2d5a0f2241477ab1228b5a323",
