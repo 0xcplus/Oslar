@@ -1,32 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-const double appSize = 0.7; //main.dart 반영. 비율 0.7 권장.
-const double radius = 40*appSize;
-const roundedCorner = Radius.circular(22*appSize);
-
-//글꼴 기초. main.dart에서 적용되는 부분도 있으나 만들어둠.
-TextStyle initTextStyle(
-  { String font='NanumGothic', 
-  double fontSize=22, 
-  color=const Color.fromARGB(255, 44, 44, 44),
-  decoration=TextDecoration.none}) { 
-    return TextStyle(
-      fontFamily: font,
-      fontSize: fontSize*appSize,
-      color: color,
-      decoration: decoration,
-    );
-}
-
-BoxShadow initShadowSetting({double spreadRadius=5, double blurRadius=8}){
-    return BoxShadow(
-      color: Colors.black.withOpacity(0.2),
-      spreadRadius: spreadRadius,
-      blurRadius: blurRadius,
-      offset: const Offset(0, 4),
-  );
-}
+import '../function/chatmode.dart';
+import '../UI/standard.dart';
 
 Widget buildMyMsg(BuildContext context, Map message) {
   final String time = DateFormat('HH:mm').format(message['time']);
@@ -51,14 +27,18 @@ Widget buildMyMsg(BuildContext context, Map message) {
                 minHeight: 40*appSize,
                 maxWidth: MediaQuery.of(context).size.width * 0.6,
               ),
-              decoration: const BoxDecoration(
-                color:Color.fromRGBO(146, 251, 183, 1),
-                borderRadius: BorderRadius.only(
+              decoration: BoxDecoration(
+                color:const Color.fromARGB(255, 93, 238, 204), //Color.fromRGBO(146, 251, 183, 1),
+                borderRadius: const BorderRadius.only(
                   topLeft: roundedCorner,
                   topRight: Radius.circular(7*appSize),
                   bottomLeft: roundedCorner,
                   bottomRight: roundedCorner
-                )
+                ),
+                border: Border.all(
+                  color: const Color.fromRGBO(1, 1, 1, 0.095),
+                  width: 2*appSize,
+                ),
               ),
               child: SelectableText(
                 message['text'],
@@ -81,7 +61,7 @@ Widget buildOtherMsg(BuildContext context, Map message) {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          padding: const EdgeInsets.all(3*appSize),
+          padding: const EdgeInsets.all(4*appSize),
           decoration: BoxDecoration(
             gradient: const LinearGradient(
               begin: Alignment.bottomRight,
@@ -92,18 +72,13 @@ Widget buildOtherMsg(BuildContext context, Map message) {
                 Color.fromRGBO(60, 157, 243, 0.8),
               ],
             ),
-            borderRadius: BorderRadius.circular(2*radius), //80
+            borderRadius: BorderRadius.circular(2*radiusChatImage), //80
           ),
           child: CircleAvatar(
-            radius: radius,
+            radius: radiusChatImage,
             backgroundColor: const Color.fromRGBO(255, 255, 255, 1),
             child: ClipOval(
-              child: Image.asset(
-                'assets/images/logo.png',
-                width: radius*1.4,
-                height: radius*1.4,
-                fit: BoxFit.cover,
-                ),
+              child: findChatImage('initGPT'), //initGPT 접근
             ),
           ),
         ),
@@ -122,7 +97,7 @@ Widget buildOtherMsg(BuildContext context, Map message) {
                     padding: const EdgeInsets.all(3*appSize),
                     child: Text(
                       'ChatGPT',
-                      style: initTextStyle(),
+                      style: initTextStyle(font: 'NanumGothicBold', fontSize: 27),
                     ),
                   ),
 
@@ -159,7 +134,7 @@ Widget buildOtherMsg(BuildContext context, Map message) {
 
               const SizedBox(width: 4*appSize),
               Padding(
-                padding: const EdgeInsets.only(top: 10*appSize), // 적절한 위치 조정을 위해 패딩 추가
+                padding: const EdgeInsets.only(top: 10*appSize),
                 child: Text(
                   time,
                   style: initTextStyle(fontSize: 14),

@@ -22,8 +22,9 @@ jobs:
       run: flutter pub get
 
     - name: Run Node.js Server
-      run: |
+      run: | #next react would takes much time.
         npm install
+        npm install next react react-dom
         node api/getApiKey.js & 
         sleep 5
 
@@ -36,9 +37,14 @@ jobs:
     - name: Build Web
       run: flutter build web --release
 
-    - name: Copy favicon to build
+    - name: Copy Oslar logo files to build
       run: |
-        cp assets/images/favicon.png build/web/favicon.png
+        cp assets/oslar/favicon.png build/web/favicon.png
+        cp assets/oslar/Icon-192.png build/web/icons/Icon-192.png
+        cp assets/oslar/Icon-512.png build/web/icons/Icon-512.png
+        cp assets/oslar/Icon-maskable-192.png build/web/icons/Icon-maskable-192.png
+        cp assets/oslar/Icon-maskable-512.png build/web/icons/Icon-maskable-512.png
+
     #sed -i 's|<link rel="icon" type="image/png" href="favicon.png">|<link rel="icon" type="image/png" sizes=href="favicon.png">|g' build/web/index.html
 
     - name: Update base href and mobile-web-app-capable meta tag

@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:dart_openai/dart_openai.dart';
 
+import 'chatmode.dart';
+
 //ChatGPT 함수
 final requestMessages = [OpenAIChatCompletionChoiceMessageModel(
   content: [
@@ -22,10 +24,11 @@ Future<void> fetchStreamedResponse(String inputMessage, StreamController<String>
   ); requestMessages.add(userMessage);
 
   String result = '';
+  String exampleModel = 'initGPT'; // 수정 요망
 
   try{
     final chatStream = OpenAI.instance.chat.createStream(
-      model: "gpt-4o-mini",
+      model: findChatVersion(exampleModel),
       messages: requestMessages
     );
 

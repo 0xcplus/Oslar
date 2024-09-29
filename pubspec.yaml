@@ -31,6 +31,14 @@ flutter:
   uses-material-design: true
   assets:
   - assets/config/.env
+
+  #환경 요소
   - assets/images/logo.png
   - assets/images/oslar.png
-  - assets/images/favicon.png
+
+  #Oslar 로고
+  - assets/oslar/favicon.png
+  - assets/oslar/Icon-192.png
+  - assets/oslar/Icon-512.png
+  - assets/oslar/Icon-maskable-192.png
+  - assets/oslar/Icon-maskable-512.png

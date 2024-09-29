@@ -3,17 +3,20 @@ import 'package:flutter/material.dart';
 
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:async';
+
 import '../UI/chatpage_ui.dart';
 import '../function/openai.dart';
+import '../UI/standard.dart';
 
 //지정
 String url = 'https://github.com/0xcplus/Oslar/';
 StreamController<String> _streamController = StreamController<String>(); 
 
-Map<String, dynamic> _mapMessage(String target, {String text='생각 중...'}){
+Map<String, dynamic> _mapMessage(String target, {String model='initGPT', String text='생각 중...'}){
   final time = DateTime.now();
   return {
-    'target':target,
+    'model':model,    //기본값 GPT 4o
+    'target':target,  //주체
     'text':text,
     'time':time
   };
@@ -129,7 +132,7 @@ class _ChatPageState extends State<ChatPage> {
               ),
 
               decoration: BoxDecoration(
-                color: const Color.fromARGB(255, 85, 225, 160),
+                color: const Color.fromARGB(255, 85, 225, 192), //const Color.fromARGB(255, 85, 225, 160),
                 borderRadius: const BorderRadius.only(
                   bottomLeft: Radius.circular(10.0),
                   bottomRight: Radius.circular(10.0),
@@ -143,8 +146,6 @@ class _ChatPageState extends State<ChatPage> {
             //홈
             ListTile(
               leading: const Icon(Icons.home),
-              //iconColor: Color,
-              //focusColor: Color,
               title:Text('홈', style: initTextStyle()),
               onTap:(){},
               trailing: const Icon(Icons.navigate_next),
@@ -153,8 +154,6 @@ class _ChatPageState extends State<ChatPage> {
             //채팅
             ListTile(
               leading: const Icon(Icons.chat),
-              //iconColor: Color,
-              //focusColor: Color,
               title:Text('채팅', style: initTextStyle()),
               onTap:(){},
               trailing: const Icon(Icons.navigate_next),
@@ -163,8 +162,6 @@ class _ChatPageState extends State<ChatPage> {
              //설정
             ListTile(
               leading: const Icon(Icons.settings),
-              //iconColor: Color,
-              //focusColor: Color,
               title:Text('설정', style: initTextStyle()),
               onTap:(){},
               trailing: const Icon(Icons.navigate_next),
@@ -220,7 +217,7 @@ class InputTextArea extends StatefulWidget {
 }
 
 class _InputTextAreaState extends State<InputTextArea> {
-  final FocusNode focusNode = FocusNode();
+  final FocusNode focusInputTextfield = FocusNode();
   final TextEditingController _controller = TextEditingController();
 
    void _onButtonPressed() {
@@ -233,7 +230,7 @@ class _InputTextAreaState extends State<InputTextArea> {
 
   @override
   void dispose(){
-    focusNode.dispose();
+    focusInputTextfield.dispose();
     _controller.dispose();
     super.dispose();
   }
@@ -264,25 +261,28 @@ class _InputTextAreaState extends State<InputTextArea> {
               child: Row(
                 children: <Widget>[
                   Expanded(
-                    child : KeyboardListener(
-                      focusNode: focusNode,
+                    //child : KeyboardListener(
+                      //focusNode: focusInputTextfield,
                       child : TextField(
                         controller: _controller,
+                        focusNode: focusInputTextfield,
                         onSubmitted: (value) {
                           _onButtonPressed();
+                          focusInputTextfield.requestFocus(); 
                         },
                         decoration: const InputDecoration(
                           border: OutlineInputBorder(),
                           labelText: 'Enter your message',
                         ),
                       ),
-                    ),
+                    //),
                   ),
                   const SizedBox(width: 15),
                   IconButton(
                     icon: const Icon(Icons.send),
                     onPressed: () {
                       _onButtonPressed();
+                      focusInputTextfield.requestFocus(); 
                     },
                   ),
                 ],

@@ -10,8 +10,8 @@ import 'package:dart_openai/dart_openai.dart';
 //etc.
 import 'env/env.dart';
 import 'page/chatpage.dart';
+import 'UI/standard.dart';
 
-const double appSize = 0.7; //ui.dart 반영
 String errorFind = "";
 
 Future<void> main() async{
@@ -65,14 +65,9 @@ class MyApp extends StatelessWidget {
         useMaterial3: false, // Material 3 스타일 사용
 
         // 기본 텍스트 스타일
-        textTheme: const TextTheme(
-          bodyLarge: TextStyle(
-            fontSize: 22*appSize, 
-            fontFamily: 'NanumGothic',
-            color: Color.fromARGB(255, 44, 44, 44),
-            ), 
+        textTheme: TextTheme(
+          bodyLarge: initTextStyle(),
         ),
-
       ),
 
       home: const ChatPage(title: 'Oslar'),
