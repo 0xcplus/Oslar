@@ -13,7 +13,7 @@ final requestMessages = [OpenAIChatCompletionChoiceMessageModel(
   role: OpenAIChatMessageRole.assistant,
 )];
 
-Future<void> fetchStreamedResponse(String inputMessage, StreamController<String> streamController) async {
+Future<void> fetchStreamedResponse(String inputMessage, String chatModel, StreamController<String> streamController) async {
   final userMessage = OpenAIChatCompletionChoiceMessageModel(
     content: [
       OpenAIChatCompletionChoiceMessageContentItemModel.text(
@@ -24,11 +24,10 @@ Future<void> fetchStreamedResponse(String inputMessage, StreamController<String>
   ); requestMessages.add(userMessage);
 
   String result = '';
-  String exampleModel = 'initGPT'; // 수정 요망
 
   try{
     final chatStream = OpenAI.instance.chat.createStream(
-      model: findChatVersion(exampleModel),
+      model: findChatVersion(chatModel),
       messages: requestMessages
     );
 

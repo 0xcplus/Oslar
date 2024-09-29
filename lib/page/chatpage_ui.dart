@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../function/chatmode.dart';
-import '../UI/standard.dart';
+import '../index/standard.dart';
 
 Widget buildMyMsg(BuildContext context, Map message) {
   final String time = DateFormat('HH:mm').format(message['time']);

@@ -7,8 +7,7 @@ const roundedCorner = Radius.circular(22*appSize);
 
 //글꼴 기초
 TextStyle initTextStyle(
-  { String font='NanumGothic', 
-  double fontSize=22, 
+  { String font='NanumGothic', double fontSize=22, 
   color=const Color.fromARGB(255, 44, 44, 44),
   decoration=TextDecoration.none}
   ){ 
@@ -21,11 +20,15 @@ TextStyle initTextStyle(
 }
 
 //그림자 기초
-BoxShadow initShadowSetting({double spreadRadius=5, double blurRadius=8}){
+BoxShadow initShadowSetting({
+  color = const Color.fromRGBO(0, 0, 0, 0.2), 
+  double spreadRadius=5, double blurRadius=8, 
+  Offset offset=const Offset(0, 4)}
+  ){
     return BoxShadow(
-      color: Colors.black.withOpacity(0.2),
+      color: color,
       spreadRadius: spreadRadius,
       blurRadius: blurRadius,
-      offset: const Offset(0, 4),
+      offset: offset,
   );
 }

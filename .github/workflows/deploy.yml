@@ -22,9 +22,8 @@ jobs:
       run: flutter pub get
 
     - name: Run Node.js Server
-      run: | #next react would takes much time.
+      run: | #next react would takes much time. > npm install next react react-dom
         npm install
-        npm install next react react-dom
         node api/getApiKey.js & 
         sleep 5
 

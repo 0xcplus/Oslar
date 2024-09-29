@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-//import 'package:flutter/services.dart';
 
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:async';
+import 'dart:io' show Platform;
 
-import '../UI/chatpage_ui.dart';
+import 'chatpage_ui.dart';
 import '../function/openai.dart';
-import '../UI/standard.dart';
+import '../index/standard.dart';
 
 //지정
 String url = 'https://github.com/0xcplus/Oslar/';
@@ -33,6 +33,7 @@ class ChatPage extends StatefulWidget {
 
 class _ChatPageState extends State<ChatPage> {
   List messageList = [];
+  String exampleModel = 'initGPT';
   Color infLinkColor = const Color.fromARGB(255, 126, 141, 134);
 
   void setStateMessage(target, text) {
@@ -44,7 +45,7 @@ class _ChatPageState extends State<ChatPage> {
     messageList.add(_mapMessage('Assistant'));
 
     _streamController = StreamController<String>(); 
-    fetchStreamedResponse(text, _streamController);
+    fetchStreamedResponse(text, exampleModel, _streamController);
 
     _streamController.stream.listen((response){
       setState((){
@@ -188,22 +189,34 @@ class _ChatAreaState extends State<ChatArea>{
   Widget build(BuildContext context){
     WidgetsBinding.instance.addPostFrameCallback((_) {
       scrollController.animateTo(scrollController.position.maxScrollExtent,
-       duration: const Duration(milliseconds: 300), curve: Curves.ease);
+       duration: const Duration(milliseconds: 10), curve: Curves.ease);
     });
 
+    //TARGET에 의해 결정되므로 chatmode.dart 참고
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-        child:ListView.builder(
-          controller: scrollController,
-          itemCount:widget.messageList.length,
-          itemBuilder: (BuildContext context, int index){
-            bool isUser = (widget.messageList[index]['target']!='Assistant'); // 수정 요망
-            return isUser? buildMyMsg(context, widget.messageList[index])
-            :buildOtherMsg(context, widget.messageList[index]);
-          }
+        
+        child:Column(
+          children: [
+            Expanded(
+              child: ListView.builder(
+                controller: scrollController,
+                itemCount:widget.messageList.length+1,
+                itemBuilder: (BuildContext context, int index){
+                  if (index == widget.messageList.length) {
+                    return const SizedBox(height: 20); // 여백 추가
+                  }
+                  bool isUser = (widget.messageList[index]['target']!='Assistant'); // 수정 요망
+                  return isUser? buildMyMsg(context, widget.messageList[index])
+                  :buildOtherMsg(context, widget.messageList[index]);
+                }
+              ),
+            ),
+          ]
         )
-      )
+
+      ),
     );
   }
 }
@@ -217,7 +230,7 @@ class InputTextArea extends StatefulWidget {
 }
 
 class _InputTextAreaState extends State<InputTextArea> {
-  final FocusNode focusInputTextfield = FocusNode();
+  final FocusNode _focusInputTextfield = FocusNode();
   final TextEditingController _controller = TextEditingController();
 
    void _onButtonPressed() {
@@ -230,67 +243,64 @@ class _InputTextAreaState extends State<InputTextArea> {
 
   @override
   void dispose(){
-    focusInputTextfield.dispose();
+    _focusInputTextfield.dispose();
     _controller.dispose();
     super.dispose();
   }
 
   @override
-  Widget build(BuildContext context){
-    return Stack(
-      clipBehavior: Clip.none,
-      children: [
-        Positioned(
-          top: 10,
-          left: 0,
-          right: 0,
-          child: Container(
-            height:100,
-            decoration: BoxDecoration(
-              color: const Color.fromARGB(255, 248, 248, 248),
-              boxShadow: [initShadowSetting(spreadRadius: 5, blurRadius: 12)], // 위로 적용될 그림자 설정
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: const Color.fromARGB(255, 250, 250, 250),
+        boxShadow: [initShadowSetting(
+          color: const Color.fromRGBO(0, 0, 0, 0.5),
+          spreadRadius: 5,
+          blurRadius: 12,
+        )],
+        borderRadius: const BorderRadius.vertical(
+          top: Radius.circular(5), // 아래쪽 모서리를 둥글게
+        ),
+      ),
+
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(15, 20, 15, 15),
+            child: Row(
+              children: <Widget>[
+                // 입력창
+                Expanded(
+                  child: TextField(
+                    minLines: 1,
+                    maxLines: 4,
+                    controller: _controller,
+                    focusNode: _focusInputTextfield,
+                    onSubmitted: (value) {
+                      _onButtonPressed();
+                      if (!(Platform.isIOS || Platform.isAndroid)) _focusInputTextfield.requestFocus();
+                    },
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: '입력창',
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 15),
+
+                // 전송 버튼
+                IconButton(
+                  icon: const Icon(Icons.send),
+                  onPressed: () {
+                    _onButtonPressed();
+                    if (!(Platform.isIOS || Platform.isAndroid))  _focusInputTextfield.requestFocus();
+                  },
+                ),
+              ],
             ),
           ),
-        ),
-
-        Column(
-          children: [
-            const Divider(thickness: 1),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(15, 11, 15, 15),
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                    //child : KeyboardListener(
-                      //focusNode: focusInputTextfield,
-                      child : TextField(
-                        controller: _controller,
-                        focusNode: focusInputTextfield,
-                        onSubmitted: (value) {
-                          _onButtonPressed();
-                          focusInputTextfield.requestFocus(); 
-                        },
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'Enter your message',
-                        ),
-                      ),
-                    //),
-                  ),
-                  const SizedBox(width: 15),
-                  IconButton(
-                    icon: const Icon(Icons.send),
-                    onPressed: () {
-                      _onButtonPressed();
-                      focusInputTextfield.requestFocus(); 
-                    },
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

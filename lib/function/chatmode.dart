@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../UI/standard.dart';
+import '../index/standard.dart';
 
 Map<String, dynamic> _chatSet(String target, String modelVersion, String asset, {String information = 'Original ChatGPT Model'}){
   return {
@@ -17,7 +17,8 @@ Map<String, dynamic> _chatSet(String target, String modelVersion, String asset, 
 
 //Chat 모드 설정
 List chatMode = [
-  _chatSet('initGPT', 'gpt-4o-mini','assets/images/logo.png')
+  _chatSet('initGPT', 'gpt-4o-mini','assets/images/logo.png'),
+  _chatSet('reasonGPT', 'o1-mini', 'assets/images/logo.png'), //'o1-preview'
 ];
 
 String findChatVersion(String target){

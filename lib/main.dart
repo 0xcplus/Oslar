@@ -1,4 +1,4 @@
-//flutter
+//flutter & dart
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -10,7 +10,7 @@ import 'package:dart_openai/dart_openai.dart';
 //etc.
 import 'env/env.dart';
 import 'page/chatpage.dart';
-import 'UI/standard.dart';
+import 'index/standard.dart';
 
 String errorFind = "";
 
@@ -19,7 +19,7 @@ Future<void> main() async{
 
   String apiKey;
   try { apiKey = await fetchApiKey(); }   //GitHub
-  catch (e) {                             //Local
+  catch (e) {                             //Local(Web, Windows)
     print('It could be not the GitHub Pages : $e');
     await dotenv.load(fileName: "assets/config/.env");
     apiKey = Env.apiKey;
@@ -48,6 +48,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Oslar',
+
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
           seedColor: const Color.fromARGB(255, 70, 70, 70),
