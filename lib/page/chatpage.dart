@@ -12,21 +12,6 @@ import '../index/standard.dart';
 String url = 'https://github.com/0xcplus/Oslar/';
 StreamController<String> _streamController = StreamController<String>(); 
 
-Map<String, dynamic> _mapMessage(
-  String target, 
-  {String model='initGPT', String text='생각 중...'}
-  ){
-  final time = DateTime.now();
-  return {
-    'model':model,    //기본값 GPT 4o
-    'target':target,  //주체
-    'text':text,      //메시지
-    'stacked':'',     //마크다운 처리
-    'markdown':[],
-    'time':time
-  };
-}
-
 //페이지 구성
 class ChatPage extends StatefulWidget {
   const ChatPage({super.key, required this.title});
@@ -37,17 +22,17 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends State<ChatPage> {
-  List messageList = [];
+  List messageList = [];              //수정 필요
   String exampleModel = 'initGPT';
   Color infLinkColor = const Color.fromARGB(255, 126, 141, 134);
 
   void setStateMessage(target, text) {
     setState(() {
-      messageList.add(_mapMessage(target, text:text));
+      messageList.add(mapMessage(target, text:text));
     });
 
     final number = messageList.length; //현재까지의 리스트 길이
-    messageList.add(_mapMessage('Assistant'));
+    messageList.add(mapMessage('assistant'));
 
     _streamController = StreamController<String>(); 
     fetchStreamedResponse(text, exampleModel, _streamController);
@@ -56,9 +41,15 @@ class _ChatPageState extends State<ChatPage> {
       setState((){
         messageList[number]['text']=response;
       });
+    }, onDone: (){
+      setState(() {
+        messageList[number]['processed']=1;
+        print(messageList[number]);
+      });
     }, onError: (error){
       print('Error Code : $error');
-    });
+    }, );
+    
   }
 
   @override
@@ -213,8 +204,8 @@ class _ChatAreaState extends State<ChatArea>{
                   if (index == widget.messageList.length) {
                     return const SizedBox(height: 20); // 여백 추가
                   }
-                  bool isUser = (widget.messageList[index]['target']!='Assistant'); // 수정 요망
-                  return isUser? buildMyMsg(context, widget.messageList[index])
+                  bool isUser = (widget.messageList[index]['target']!='assistant'); // 수정 요망
+                  return isUser? buildMyMsg(context, widget.messageList[index],)
                   :buildOtherMsg(context, widget.messageList[index]);
                 }
               ),
@@ -242,7 +233,7 @@ class _InputTextAreaState extends State<InputTextArea> {
    void _onButtonPressed() {
     if(_controller.text.isNotEmpty){
       final text = _controller.text;
-      widget.updateMessag('User', text);
+      widget.updateMessag('user', text);
       _controller.clear();
     }
   }

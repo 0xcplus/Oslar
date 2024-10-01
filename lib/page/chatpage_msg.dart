@@ -1,9 +1,26 @@
+//import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../function/chatmode.dart';
 import '../function/markdown.dart';
 import '../index/standard.dart';
+
+Map<String, dynamic> mapMessage(
+  String target,
+  {String model='initGPT', String text='생각 중...', int processed=0}
+  ){
+  final time = DateTime.now();
+  return {
+    'model':model,    //기본값 GPT 4o
+    'target':target,  //주체
+    'text':text,      //메시지
+    'stacked':<InlineSpan>[TextSpan(text: text)],     //마크다운 처리
+    'processed':processed,
+    'time':time
+  };
+}
 
 Widget buildMyMsg(BuildContext context, Map message) {
   final String time = DateFormat('HH:mm').format(message['time']);
@@ -42,7 +59,7 @@ Widget buildMyMsg(BuildContext context, Map message) {
                 ),
               ),
 
-              child: MarkdownText(message:message) //SelectableText(message['text'], style: initTextStyle()), //마크다운 해제
+              child: MarkdownText(message:message) //SelectableText(message['text'], style: initTextStyle()) //, //마크다운 해제
             );
           },
         ),

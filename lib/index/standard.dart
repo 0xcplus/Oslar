@@ -8,12 +8,17 @@ const roundedCorner = Radius.circular(22*appSize);
 //글꼴 기초
 TextStyle initTextStyle(
   { String font='NanumGothic', double fontSize=22, 
+  FontStyle fontStyle = FontStyle.normal, FontWeight fontWeight = FontWeight.normal,
   color=const Color.fromARGB(255, 44, 44, 44),
   decoration=TextDecoration.none}
   ){ 
     return TextStyle(
       fontFamily: font,
       fontSize: fontSize*appSize,
+
+      fontStyle: fontStyle,
+      fontWeight: fontWeight,
+
       color: color,
       decoration: decoration,
     );
