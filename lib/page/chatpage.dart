@@ -4,7 +4,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'dart:async';
 import 'dart:io' show Platform;
 
-import 'chatpage_ui.dart';
+import 'chatpage_msg.dart';
 import '../function/openai.dart';
 import '../index/standard.dart';
 
@@ -12,12 +12,17 @@ import '../index/standard.dart';
 String url = 'https://github.com/0xcplus/Oslar/';
 StreamController<String> _streamController = StreamController<String>(); 
 
-Map<String, dynamic> _mapMessage(String target, {String model='initGPT', String text='생각 중...'}){
+Map<String, dynamic> _mapMessage(
+  String target, 
+  {String model='initGPT', String text='생각 중...'}
+  ){
   final time = DateTime.now();
   return {
     'model':model,    //기본값 GPT 4o
     'target':target,  //주체
-    'text':text,
+    'text':text,      //메시지
+    'stacked':'',     //마크다운 처리
+    'markdown':[],
     'time':time
   };
 }
@@ -113,6 +118,7 @@ class _ChatPageState extends State<ChatPage> {
                     infLinkColor = const Color.fromARGB(255, 126, 141, 134);
                   });
                 },
+                cursor: SystemMouseCursors.click,
                 child: GestureDetector(
                   onTap: () async{
                     final Uri uri = Uri.parse(url);
@@ -273,7 +279,7 @@ class _InputTextAreaState extends State<InputTextArea> {
                 Expanded(
                   child: TextField(
                     minLines: 1,
-                    maxLines: 4,
+                    maxLines: 6,
                     controller: _controller,
                     focusNode: _focusInputTextfield,
                     onSubmitted: (value) {

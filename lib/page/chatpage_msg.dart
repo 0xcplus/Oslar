@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../function/chatmode.dart';
+import '../function/markdown.dart';
 import '../index/standard.dart';
 
 Widget buildMyMsg(BuildContext context, Map message) {
@@ -36,14 +37,12 @@ Widget buildMyMsg(BuildContext context, Map message) {
                   bottomRight: roundedCorner
                 ),
                 border: Border.all(
-                  color: const Color.fromRGBO(1, 1, 1, 0.095),
+                  color: const Color.fromRGBO(1, 1, 1, 0.1),
                   width: 2*appSize,
                 ),
               ),
-              child: SelectableText(
-                message['text'],
-                style: initTextStyle(),
-              ),
+
+              child: MarkdownText(message:message) //SelectableText(message['text'], style: initTextStyle()), //마크다운 해제
             );
           },
         ),
@@ -122,10 +121,10 @@ Widget buildOtherMsg(BuildContext context, Map message) {
                             width: 2*appSize,
                           ),
                         ),
-                        child: SelectableText(
-                          message['text'],
-                          style: initTextStyle(),
-                        ),
+
+                        //child:
+
+                        child: MarkdownText(message: message),
                       );
                     }
                   )
