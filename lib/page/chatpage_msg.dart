@@ -59,7 +59,7 @@ Widget buildMyMsg(BuildContext context, Map message) {
                 ),
               ),
 
-              child: MarkdownText(message:message) //SelectableText(message['text'], style: initTextStyle()) //, //마크다운 해제
+              child: SelectableText(message['text'], style: initTextStyle()) //MarkdownText(message:message) //마크다운 해제
             );
           },
         ),

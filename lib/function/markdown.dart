@@ -21,10 +21,10 @@ List _regaxList = [ //마크다운 우선순위
 
   //code / Container 최대치 5
   _regaxSet(RegExp(r'`{5,}\s*([\s\S]*?)\s*`{5,}'),Container, style: initTextStyle(font: 'NanumGothicCoding')),  //RegExp(r'`{5,}\s*(.*?)\s*`{5,}')
-  _regaxSet(RegExp(r'`{4}\s*([\s\S]*?)\s*`{4}'),Container, style: initTextStyle(font: 'NanumGothicCoding', color: Colors.red)),  
+  _regaxSet(RegExp(r'`{4}\s*([\s\S]*?)\s*`{4}'),Container, style: initTextStyle(font: 'NanumGothicCoding')),  
   _regaxSet(RegExp(r'`{3}\s*([\s\S]*?)\s*`{3}',),Container, style: initTextStyle(font: 'NanumGothicCoding')), //(r'`{3}\s*(.*?)\s*`{3}') > code?
-  _regaxSet(RegExp(r'`{2}\s*(\S.+)\s*`{2}'),Text, style: initTextStyle(font: 'NanumGothicCoding', color: Colors.purple)),  //(r'`{2}\s*(.*?)\s*`{2}')
-  _regaxSet(RegExp(r'\`{1,}(\S.+)\`{1,}',), Text, style: initTextStyle(font: 'NanumGothicCoding', color: Colors.purple)), //RegExp(r'\`{1,}(.*?)\`{1,}',)
+  _regaxSet(RegExp(r'`{2}\s*(\S.+)\s*`{2}'),Text, style: initTextStyle(font: 'NanumGothicCoding', color: const Color.fromARGB(255, 134, 0, 0))),  //(r'`{2}\s*(.*?)\s*`{2}')
+  _regaxSet(RegExp(r'\`{1,}(\S.+)\`{1,}',), Text, style: initTextStyle(font: 'NanumGothicCoding', color: const Color.fromARGB(255, 134, 0, 0))), //RegExp(r'\`{1,}(.*?)\`{1,}',)
 
   //horizon
   _regaxSet(RegExp(r'^\s*-{3,}\s*$'),Divider), //r'^-{3}\s+(?=\n)'
@@ -93,7 +93,7 @@ class _MarkdownTextState extends State<MarkdownText> {
 
       List<TextSpan> addTextSpan = [];
       List<InlineSpan> finalResultList = [];
-      InlineSpan ifEmpty = const TextSpan();
+      //InlineSpan ifEmpty = const TextSpan();
 
       print('${result.length} whats the probrem? $result');
 
@@ -101,7 +101,7 @@ class _MarkdownTextState extends State<MarkdownText> {
         print(span.runtimeType);
         if(span is TextSpan){
           addTextSpan.add(span);
-          ifEmpty=span;
+          //ifEmpty=span;
         }
         else{
           print('therere datas');
@@ -110,11 +110,11 @@ class _MarkdownTextState extends State<MarkdownText> {
           addTextSpan = [];
         }
       }
-      finalResultList.add(ifEmpty);
+      //finalResultList.add(addTextSpan);
 
       print('finalresult : $finalResultList');
 
-      widget.message['stacked']=finalResultList;
+      widget.message['stacked']=[...finalResultList,...addTextSpan];
 
       widget.message['processed']=200;
       print("+++it's end.+++ ${widget.message['processed']}");

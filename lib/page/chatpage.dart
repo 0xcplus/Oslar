@@ -23,7 +23,7 @@ class ChatPage extends StatefulWidget {
 
 class _ChatPageState extends State<ChatPage> {
   List messageList = [];              //수정 필요
-  String exampleModel = 'initGPT';
+  String exampleModel = 'initGPT';    //현 모델 initGPT, reasonGPT, exampleGPT
   Color infLinkColor = const Color.fromARGB(255, 126, 141, 134);
 
   void setStateMessage(target, text) {
@@ -58,7 +58,9 @@ class _ChatPageState extends State<ChatPage> {
       appBar: AppBar(
         title: Text(
           widget.title,
-          style: initTextStyle(fontSize: 30, color:const Color.fromARGB(255, 248, 248, 248),
+          style: initTextStyle(
+            fontWeight: FontWeight.bold,fontSize: 30, 
+            color:const Color.fromARGB(255, 248, 248, 248),
           ),),
         elevation: 4,
         backgroundColor: const Color.fromARGB(255, 48, 48, 48),
@@ -91,9 +93,9 @@ class _ChatPageState extends State<ChatPage> {
 
               //계정 이름
               accountName: Text(
-                'Oslar', //수정 요망
+                'Oslar', //수정해야하나?
                 style: initTextStyle(
-                  fontSize: 25,
+                  fontSize: 25, fontWeight: FontWeight.bold,
                   color:const Color.fromARGB(255, 40, 40, 40)),
               ) ,
 
@@ -122,6 +124,7 @@ class _ChatPageState extends State<ChatPage> {
                   child: Text(
                     url,
                     style: initTextStyle(
+                      fontWeight: FontWeight.bold,
                       color:infLinkColor, 
                       decoration: TextDecoration.underline,
                     )
