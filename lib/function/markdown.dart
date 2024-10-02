@@ -13,23 +13,26 @@ Map<String, dynamic> _regaxSet(RegExp regax, Type type, {TextStyle style=const T
 }
 
 List _regaxList = [ //마크다운 우선순위
+  //numbering
+  _regaxSet(RegExp(r'^\d+\.\s+.*?(?=\n|$)'), Text, style: initTextStyle(fontSize: 30)),
+  _regaxSet(RegExp(r'(?:(?<=\n)|^)#{1,}\s+(\S.+)(?=\n|$)'), Text, style: initTextStyle( //r'^#{1,}\s+(\S.+)'
+    fontSize: 27, fontWeight: FontWeight.bold)
+    ),
+
   //code / Container 최대치 5
-  _regaxSet(RegExp(r'`{5,}\s*([\s\S]*?)\s*`{5,}'),Container, style: initTextStyle(font: 'NanumGothicCodingLigature')),  //RegExp(r'`{5,}\s*(.*?)\s*`{5,}')
-  _regaxSet(RegExp(r'`{4}\s*([\s\S]*?)\s*`{4}'),Container, style: initTextStyle(font: 'NanumGothicCodingLigature', color: Colors.red)),  
-  _regaxSet(RegExp(r'`{3}\s*([\s\S]*?)\s*`{3}',),Container, style: initTextStyle(font: 'NanumGothicCodingLigature')), //(r'`{3}\s*(.*?)\s*`{3}') > code?
-  _regaxSet(RegExp(r'`{2}\s*(\S.+)\s*`{2}'),Container, style: initTextStyle(font: 'NanumGothicCodingLigature')),  //(r'`{2}\s*(.*?)\s*`{2}')
-  _regaxSet(RegExp(r'\`{1,}(\S.+)\`{1,}',), Container, style: initTextStyle(font: 'NanumGothicCodingLigature', color: Colors.yellow)), //RegExp(r'\`{1,}(.*?)\`{1,}',)
+  _regaxSet(RegExp(r'`{5,}\s*([\s\S]*?)\s*`{5,}'),Container, style: initTextStyle(font: 'NanumGothicCoding')),  //RegExp(r'`{5,}\s*(.*?)\s*`{5,}')
+  _regaxSet(RegExp(r'`{4}\s*([\s\S]*?)\s*`{4}'),Container, style: initTextStyle(font: 'NanumGothicCoding', color: Colors.red)),  
+  _regaxSet(RegExp(r'`{3}\s*([\s\S]*?)\s*`{3}',),Container, style: initTextStyle(font: 'NanumGothicCoding')), //(r'`{3}\s*(.*?)\s*`{3}') > code?
+  _regaxSet(RegExp(r'`{2}\s*(\S.+)\s*`{2}'),Text, style: initTextStyle(font: 'NanumGothicCoding', color: Colors.purple)),  //(r'`{2}\s*(.*?)\s*`{2}')
+  _regaxSet(RegExp(r'\`{1,}(\S.+)\`{1,}',), Text, style: initTextStyle(font: 'NanumGothicCoding', color: Colors.purple)), //RegExp(r'\`{1,}(.*?)\`{1,}',)
 
   //horizon
-  _regaxSet(RegExp(r'^-{3}\s+(.*)'),Divider),
-  //_regaxSet(RegExp(r'^_{3}\s+(.*)'),Divider), //이것도
-  //_regaxSet(RegExp(r'^\*{3}\s+(.*)'),Divider), //이거 위험할지도
+  _regaxSet(RegExp(r'^\s*-{3,}\s*$'),Divider), //r'^-{3}\s+(?=\n)'
+  _regaxSet(RegExp(r'^\s*_{3,}\s*$'),Divider), //r'^_{3}\s+(?=\n)'
+  _regaxSet(RegExp(r'^\s*\*{3,}\s*$'),Divider),
 
   //emphasize
-  _regaxSet(RegExp(r'^#{1,}\s+(\S.+)'), Text, style: initTextStyle(
-    color: Colors.purple, fontSize: 25, fontWeight: FontWeight.bold)
-    ),
-  _regaxSet(RegExp(r'^-\s+(\S.+)'),Text, style: initTextStyle(color: Colors.blue)),
+  _regaxSet(RegExp(r'^-\s+(\S.+)(?=\n|$)'),Text, style: initTextStyle(color: Colors.blue)),
       //(String content) => SelectableText(content, style: const TextStyle(color:Colors.blue, fontSize: 22))),
 
 
@@ -70,8 +73,8 @@ class _MarkdownTextState extends State<MarkdownText> {
     super.didUpdateWidget(oldWidget);
     
     int isDone= widget.message['processed'];
-    String textInProgress = widget.message['text']; //.replaceAll('\n', ''); //.replaceAll('\n', '');
-    print('${widget.message}\n\n $isDone \n');
+    String textInProgress = widget.message['text'];
+    print('${widget.message['text']}\n');
     //print(textInProgress);
 
     List<InlineSpan> result = [];
@@ -80,26 +83,49 @@ class _MarkdownTextState extends State<MarkdownText> {
 
     if(isDone==0){ //마크다운 적용 완료가 아닐 경우.
       result = _applyMarkdownToNewData(textInProgress);
-      print('Result Widgets : $result');
+      //print('Result Widgets : $result');
 
       widget.message['stacked']=result;
       if(widget.message['target']=='user') {widget.message['processed']=200;}
-      print("it's end."); //?
-
     } else if(isDone==1){
       result = _applyMarkdownToNewData(textInProgress);
-      print('last one +++ Widgets : $result');
+      print('last one +++ text ${widget.message['text']} \n\n Widgets : $result');
 
-      widget.message['stacked']=result;
+      List<TextSpan> addTextSpan = [];
+      List<InlineSpan> finalResultList = [];
+      InlineSpan ifEmpty = const TextSpan();
+
+      print('${result.length} whats the probrem? $result');
+
+      for(InlineSpan span in result){
+        print(span.runtimeType);
+        if(span is TextSpan){
+          addTextSpan.add(span);
+          ifEmpty=span;
+        }
+        else{
+          print('therere datas');
+          finalResultList.add(WidgetSpan(child: SelectableText.rich(TextSpan(children: addTextSpan))));
+          finalResultList.add(span);
+          addTextSpan = [];
+        }
+      }
+      finalResultList.add(ifEmpty);
+
+      print('finalresult : $finalResultList');
+
+      widget.message['stacked']=finalResultList;
+
       widget.message['processed']=200;
       print("+++it's end.+++ ${widget.message['processed']}");
-    } else {print('///////////this is done already ${widget.message['processed']} /////////////');}
+    } else {print('/////////// this is done already /////////////');}
 
     print('\n==.==.==.==.==');
   }
 
   @override
   Widget build(BuildContext context) {
+    //print('build ${widget.message['stacked']}');
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -132,7 +158,6 @@ class _MarkdownTextState extends State<MarkdownText> {
 
         resultList = beforeMatch+matchedMatch+afterMatch;
         matched = true;
-        print('goodbye $resultList');
         break;
       }
     }
@@ -159,7 +184,7 @@ class _MarkdownTextState extends State<MarkdownText> {
         resultWidget=WidgetSpan(
           child: Container(
             decoration: const BoxDecoration(
-              color: Color.fromARGB(255, 66, 66, 66),
+              color: Color.fromRGBO(168, 168, 168, 0.5),
             ),
             padding: const EdgeInsets.all(1),
             child: SelectableText(
@@ -170,7 +195,7 @@ class _MarkdownTextState extends State<MarkdownText> {
         );
       } else if (type == Divider) {
         print('divider');
-        resultWidget=const WidgetSpan(child: Divider(color: Colors.grey, thickness: 1));
+        resultWidget=const WidgetSpan(child: Divider(color: Color.fromARGB(255, 40, 40, 40), thickness: 1));
       } else {
         resultWidget=TextSpan(text: match.group(1), style: regData['style']);
       }
