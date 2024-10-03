@@ -1,182 +1,21 @@
 import 'package:flutter/material.dart';
 
-import 'package:url_launcher/url_launcher.dart';
 import 'dart:async';
 import 'dart:io' show Platform;
 
-import 'chatpage_msg.dart';
-import '../function/openai.dart';
+import 'chatpagemsg.dart';
 import '../index/standard.dart';
+import '../function/openai.dart';
 
-//지정
 String url = 'https://github.com/0xcplus/Oslar/';
-StreamController<String> _streamController = StreamController<String>(); 
+StreamController<String> streamController = StreamController<String>(); 
 
-//페이지 구성
-class ChatPage extends StatefulWidget {
-  const ChatPage({super.key, required this.title});
-  final String title;
-
-  @override
-  State<ChatPage> createState() => _ChatPageState();
-}
-
-class _ChatPageState extends State<ChatPage> {
-  List messageList = [];              //수정 필요
-  String exampleModel = 'initGPT';    //현 모델 initGPT, reasonGPT, exampleGPT
-  Color infLinkColor = const Color.fromARGB(255, 126, 141, 134);
-
-  void setStateMessage(target, text) {
-    setState(() {
-      messageList.add(mapMessage(target, text:text));
-    });
-
-    final number = messageList.length; //현재까지의 리스트 길이
-    messageList.add(mapMessage('assistant'));
-
-    _streamController = StreamController<String>(); 
-    fetchStreamedResponse(text, exampleModel, _streamController);
-
-    _streamController.stream.listen((response){
-      setState((){
-        messageList[number]['text']=response;
-      });
-    }, onDone: (){
-      setState(() {
-        messageList[number]['processed']=1;
-        print(messageList[number]);
-      });
-    }, onError: (error){
-      print('Error Code : $error');
-    }, );
-    
-  }
-
-  @override
-  Widget build(BuildContext context){
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          widget.title,
-          style: initTextStyle(
-            fontWeight: FontWeight.bold,fontSize: 30, 
-            color:const Color.fromARGB(255, 248, 248, 248),
-          ),),
-        elevation: 4,
-        backgroundColor: const Color.fromARGB(255, 48, 48, 48),
-      ),
-
-      body:Column(
-        children: <Widget>[
-          ChatArea(messageList: messageList),
-          InputTextArea(updateMessag : setStateMessage)
-        ],
-      ),
-
-      drawer: Drawer(
-        child: ListView(
-          children: [
-            UserAccountsDrawerHeader(
-              currentAccountPicture: Container(
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  boxShadow: [
-                    initShadowSetting()
-                  ],
-                ),
-
-                child: const CircleAvatar(
-                  radius: 50,
-                  backgroundImage: AssetImage('assets/images/oslar.png'), // 이미지
-                ),
-              ),
-
-              //계정 이름
-              accountName: Text(
-                'Oslar', //수정해야하나?
-                style: initTextStyle(
-                  fontSize: 25, fontWeight: FontWeight.bold,
-                  color:const Color.fromARGB(255, 40, 40, 40)),
-              ) ,
-
-              //계정 이메일
-              accountEmail: MouseRegion(
-                onEnter: (_) {
-                  setState(() {
-                    infLinkColor = const Color.fromARGB(255, 61, 55, 148);
-                  });
-                },
-                onExit: (_) {
-                  setState(() {
-                    infLinkColor = const Color.fromARGB(255, 126, 141, 134);
-                  });
-                },
-                cursor: SystemMouseCursors.click,
-                child: GestureDetector(
-                  onTap: () async{
-                    final Uri uri = Uri.parse(url);
-                    if (await canLaunchUrl(uri)){
-                      await launchUrl(uri);
-                    } else {
-                      throw 'Could not launch $url';
-                    }
-                  },
-                  child: Text(
-                    url,
-                    style: initTextStyle(
-                      fontWeight: FontWeight.bold,
-                      color:infLinkColor, 
-                      decoration: TextDecoration.underline,
-                    )
-                  ),
-                ),
-              ),
-
-              decoration: BoxDecoration(
-                color: const Color.fromARGB(255, 85, 225, 192), //const Color.fromARGB(255, 85, 225, 160),
-                borderRadius: const BorderRadius.only(
-                  bottomLeft: Radius.circular(10.0),
-                  bottomRight: Radius.circular(10.0),
-                ),
-                boxShadow: [
-                    initShadowSetting(spreadRadius: 3, blurRadius: 5)
-                  ],
-              ),
-            ),
-
-            //홈
-            ListTile(
-              leading: const Icon(Icons.home),
-              title:Text('홈', style: initTextStyle()),
-              onTap:(){},
-              trailing: const Icon(Icons.navigate_next),
-            ),
-
-            //채팅
-            ListTile(
-              leading: const Icon(Icons.chat),
-              title:Text('채팅', style: initTextStyle()),
-              onTap:(){},
-              trailing: const Icon(Icons.navigate_next),
-            ),
-
-             //설정
-            ListTile(
-              leading: const Icon(Icons.settings),
-              title:Text('설정', style: initTextStyle()),
-              onTap:(){},
-              trailing: const Icon(Icons.navigate_next),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
+List messageList = [];              //수정 필요
+String exampleModel = 'initGPT';    //현 모델 initGPT, reasonGPT, exampleGPT
 
 class ChatArea extends StatefulWidget {
-  final List messageList;
-  const ChatArea({super.key, required this.messageList});
+  //final List messageList;
+  const ChatArea({super.key});
 
   @override
   State<ChatArea> createState() => _ChatAreaState();
@@ -184,6 +23,30 @@ class ChatArea extends StatefulWidget {
 
 class _ChatAreaState extends State<ChatArea>{
   ScrollController scrollController = ScrollController();
+
+  void setStateMessage(target, text) {
+    setState(() {
+      messageList.add(mapMessage(target, text:text)); //setState
+    });
+
+    final number = messageList.length; //현재까지의 리스트 길이
+    messageList.add(mapMessage('assistant'));
+
+    streamController = StreamController<String>(); 
+    fetchStreamedResponse(text, exampleModel, streamController);
+
+    streamController.stream.listen((response){
+      setState(() {
+        messageList[number]['text']=response; 
+      });
+    }, onDone: (){
+      setState(() {
+        messageList[number]['processed']=1;
+      });
+    }, onError: (error){
+      print('Error Code : $error');
+    }, );
+  }
 
   @override
   Widget build(BuildContext context){
@@ -193,30 +56,34 @@ class _ChatAreaState extends State<ChatArea>{
     });
 
     //TARGET에 의해 결정되므로 chatmode.dart 참고
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-        
-        child:Column(
-          children: [
-            Expanded(
-              child: ListView.builder(
-                controller: scrollController,
-                itemCount:widget.messageList.length+1,
-                itemBuilder: (BuildContext context, int index){
-                  if (index == widget.messageList.length) {
-                    return const SizedBox(height: 20); // 여백 추가
-                  }
-                  bool isUser = (widget.messageList[index]['target']!='assistant'); // 수정 요망
-                  return isUser? buildMyMsg(context, widget.messageList[index],)
-                  :buildOtherMsg(context, widget.messageList[index]);
-                }
-              ),
-            ),
-          ]
-        )
-
-      ),
+    return Column(
+      children: <Widget>[
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+            
+            child:Column(
+              children: [
+                Expanded(
+                  child: ListView.builder(
+                    controller: scrollController,
+                    itemCount:messageList.length+1,
+                    itemBuilder: (BuildContext context, int index){
+                      if (index == messageList.length) {
+                        return const SizedBox(height: 20); // 여백 추가
+                      }
+                      bool isUser = (messageList[index]['target']!='assistant'); // 수정 요망
+                      return isUser? buildMyMsg(context, messageList[index],)
+                      :buildOtherMsg(context, messageList[index]);
+                    }
+                  ),
+                ),
+              ]
+            )
+          ),
+        ),
+        InputTextArea(updateMessag: setStateMessage)
+      ]
     );
   }
 }

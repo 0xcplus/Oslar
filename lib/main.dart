@@ -9,7 +9,7 @@ import 'package:dart_openai/dart_openai.dart';
 
 //etc.
 import 'env/env.dart';
-import 'page/chatpage.dart';
+import 'page/beginpage.dart';
 import 'index/standard.dart';
 
 String errorFind = "";
@@ -71,7 +71,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
 
-      home: const ChatPage(title: 'Oslar'),
+      home: const BeginPage(title: 'Oslar'),
     );
   }
 }
