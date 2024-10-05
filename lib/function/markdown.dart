@@ -69,17 +69,17 @@ class MarkdownText extends StatefulWidget {
 class _MarkdownTextState extends State<MarkdownText> { 
   @override
   void didUpdateWidget(MarkdownText oldWidget) {
-    print("====================start========================");
+    //print("====================start========================");
     super.didUpdateWidget(oldWidget);
     
     int isDone= widget.message['processed'];
     String textInProgress = widget.message['text'];
-    print('${widget.message['text']}\n');
+    //print('${widget.message['text']}\n');
     //print(textInProgress);
 
     List<InlineSpan> result = [];
 
-    print('\n==.==.==.==.==');
+    //print('\n==.==.==.==.==');
 
     if(isDone==0){ //마크다운 적용 완료가 아닐 경우.
       result = _applyMarkdownToNewData(textInProgress);
@@ -89,38 +89,31 @@ class _MarkdownTextState extends State<MarkdownText> {
       if(widget.message['target']=='user') {widget.message['processed']=200;}
     } else if(isDone==1){
       result = _applyMarkdownToNewData(textInProgress);
-      print('last one +++ text ${widget.message['text']} \n\n Widgets : $result');
 
       List<TextSpan> addTextSpan = [];
       List<InlineSpan> finalResultList = [];
-      //InlineSpan ifEmpty = const TextSpan();
-
-      print('${result.length} whats the probrem? $result');
 
       for(InlineSpan span in result){
-        print(span.runtimeType);
         if(span is TextSpan){
           addTextSpan.add(span);
-          //ifEmpty=span;
         }
         else{
-          print('therere datas');
           finalResultList.add(WidgetSpan(child: SelectableText.rich(TextSpan(children: addTextSpan))));
           finalResultList.add(span);
           addTextSpan = [];
         }
       }
-      //finalResultList.add(addTextSpan);
 
-      print('finalresult : $finalResultList');
+      /*finalResultList가 1개 이상의 요소를 가지는 등의 상황일 때
+      addTextSpan이 개별의 요소로 추가된다는 문제가 있음.
+      */
 
       widget.message['stacked']=[...finalResultList,...addTextSpan];
-
       widget.message['processed']=200;
-      print("+++it's end.+++ ${widget.message['processed']}");
+
     } else {print('/////////// this is done already /////////////');}
 
-    print('\n==.==.==.==.==');
+    //print('\n==.==.==.==.==');
   }
 
   @override
@@ -144,13 +137,11 @@ class _MarkdownTextState extends State<MarkdownText> {
   List<InlineSpan> _applyMarkdownToNewData(String text) { 
     bool matched = false;
     List<InlineSpan> resultList = [];
-    print('progress >>> $text');
-    print('재귀함수');
 
     for (var regData in _regaxList) { //재귀함수
       if (regData['regax'].hasMatch(text)) {
         RegExpMatch match = regData['regax'].firstMatch(text);
-        print('I FOUNT IT! ${regData['regax']}');
+        //print('I FOUNT IT! ${regData['regax']}');
 
         List<InlineSpan> beforeMatch = _applyMarkdownToNewData(text.substring(0, match.start));
         List<InlineSpan> afterMatch = _applyMarkdownToNewData(text.substring(match.end));
@@ -168,7 +159,7 @@ class _MarkdownTextState extends State<MarkdownText> {
 
   InlineSpan _matchMarkDown(String text, Map regData) {
     InlineSpan resultWidget = const TextSpan();
-    print(text);
+    //print(text);
 
     final match = regData['regax'].firstMatch(text);
 
@@ -180,7 +171,6 @@ class _MarkdownTextState extends State<MarkdownText> {
       Type type = regData['type'];
 
       if (type == Container) {
-        print('container');
         resultWidget=WidgetSpan(
           child: Container(
             decoration: const BoxDecoration(
@@ -194,7 +184,6 @@ class _MarkdownTextState extends State<MarkdownText> {
           ),
         );
       } else if (type == Divider) {
-        print('divider');
         resultWidget=const WidgetSpan(child: Divider(color: Color.fromARGB(255, 40, 40, 40), thickness: 1));
       } else {
         resultWidget=TextSpan(text: match.group(1), style: regData['style']);

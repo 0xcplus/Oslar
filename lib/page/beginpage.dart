@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:oslar/page/settingpage.dart';
 
 import 'package:url_launcher/url_launcher.dart';
-import 'dart:async';
-//import 'dart:io' show Platform;
 
+import 'homepage.dart';
 import 'chatpage.dart';
 import '../index/standard.dart';
 
 //지정
 String url = 'https://github.com/0xcplus/Oslar/';
-//StreamController<String> _streamController = StreamController<String>(); 
 Color infLinkColor = const Color.fromARGB(255, 126, 141, 134);
 
 //페이지 구성
@@ -22,24 +21,30 @@ class BeginPage extends StatefulWidget {
 }
 
 class _BeginPageState extends State<BeginPage> {
-  //Stream<List<Widget>> messageStream = messageColumn();
-  ScrollController scrollController = ScrollController();
+  Widget _selectedBody = ChatArea();
+
+  void _updateBody(Widget newBody){
+    setState(() {
+      _selectedBody = newBody;
+    });
+  }
 
   @override
   Widget build(BuildContext context){
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: Text(
           widget.title,
           style: initTextStyle(
             fontWeight: FontWeight.bold,fontSize: 30, 
-            color:const Color.fromARGB(255, 248, 248, 248),
+            color:const Color.fromARGB(255, 251, 251, 251),
           ),),
         elevation: 4,
-        backgroundColor: const Color.fromARGB(255, 48, 48, 48),
+        backgroundColor: const Color.fromARGB(255, 53, 53, 53),
       ),
 
-      body: ChatArea(), //후에 바뀔 예정
+      body: _selectedBody,
       
       drawer: Drawer(
         child: ListView(
@@ -116,7 +121,10 @@ class _BeginPageState extends State<BeginPage> {
             ListTile(
               leading: const Icon(Icons.home),
               title:Text('홈', style: initTextStyle()),
-              onTap:(){},
+              onTap:(){
+                _updateBody(HomeArea());
+                Navigator.pop(context);
+              },
               trailing: const Icon(Icons.navigate_next),
             ),
 
@@ -124,7 +132,10 @@ class _BeginPageState extends State<BeginPage> {
             ListTile(
               leading: const Icon(Icons.chat),
               title:Text('채팅', style: initTextStyle()),
-              onTap:(){},
+              onTap:(){
+                _updateBody(ChatArea());
+                Navigator.pop(context);
+              },
               trailing: const Icon(Icons.navigate_next),
             ),
 
@@ -132,7 +143,10 @@ class _BeginPageState extends State<BeginPage> {
             ListTile(
               leading: const Icon(Icons.settings),
               title:Text('설정', style: initTextStyle()),
-              onTap:(){},
+              onTap:(){
+                _updateBody(SettingArea());
+                Navigator.pop(context);
+              },
               trailing: const Icon(Icons.navigate_next),
             ),
           ],

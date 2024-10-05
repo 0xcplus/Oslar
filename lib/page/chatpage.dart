@@ -14,7 +14,6 @@ List messageList = [];              //수정 필요
 String exampleModel = 'initGPT';    //현 모델 initGPT, reasonGPT, exampleGPT
 
 class ChatArea extends StatefulWidget {
-  //final List messageList;
   const ChatArea({super.key});
 
   @override

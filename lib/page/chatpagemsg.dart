@@ -9,7 +9,8 @@ import '../index/standard.dart';
 
 Map<String, dynamic> mapMessage(
   String target,
-  {String model='initGPT', String text='생각 중...', int processed=0}
+  {String model='initGPT',
+  String text='생각 중...', int processed=0}
   ){
   final time = DateTime.now();
   return {
