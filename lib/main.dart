@@ -1,14 +1,13 @@
 //flutter & dart
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'dart:convert';
 
 //openai
 import 'package:dart_openai/dart_openai.dart';
 
 //etc.
-import 'env/env.dart';
+import 'openai/apikeyfetch.dart'; //'env/env.dart';
 import 'page/beginpage.dart';
 import 'index/standard.dart';
 
@@ -17,15 +16,7 @@ String errorFind = "";
 Future<void> main() async{
   //WidgetsFlutterBinding.ensureInitialized();
 
-  String apiKey;
-  try { apiKey = await fetchApiKey(); }   //GitHub
-  catch (e) {                             //Local(Web, Windows)
-    print('It could be not the GitHub Pages : $e');
-    await dotenv.load(fileName: "assets/config/.env");
-    apiKey = Env.apiKey;
-  }
-
-  OpenAI.apiKey = apiKey;
+  OpenAI.apiKey = await returnApiKey();;
   runApp(const MyApp());
 }
 

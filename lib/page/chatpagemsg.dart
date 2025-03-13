@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../function/chatmode.dart';
+import '../openai/chatmode.dart';
 import '../function/markdown.dart';
 import '../index/standard.dart';
 

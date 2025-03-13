@@ -5,7 +5,7 @@ import 'dart:io' show Platform;
 
 import 'chatpagemsg.dart';
 import '../index/standard.dart';
-import '../function/openai.dart';
+import '../openai/openai.dart';
 
 String url = 'https://github.com/0xcplus/Oslar/';
 StreamController<String> streamController = StreamController<String>(); 

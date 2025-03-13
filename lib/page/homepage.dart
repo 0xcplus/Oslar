@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:oslar/index/standard.dart';
 
 class HomeArea extends StatefulWidget {
   const HomeArea({super.key});
@@ -9,7 +8,6 @@ class HomeArea extends StatefulWidget {
 }
 
 class _HomeAreaState extends State<HomeArea> {
-
   @override
   Widget build(BuildContext context){
     return Column(
